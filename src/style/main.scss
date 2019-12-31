@@ -76,8 +76,19 @@ input[type="checkbox"] {
   }
 }
 
-.lite-x-red{background-image:url('/static/img/lite-x-red-png');}
-.lite-x-green{background-image:url('/static/img/lite-x-green-png');}
+.lite-x-red{background-image:url('/static/img/lite-x-red.png');}
+.lite-x-green{background-image:url('/static/img/lite-x-green.png');}
+
+.customcheckbox {
+  label {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+}
 
 div.box {
   margin-top: $gutter;
