@@ -66,12 +66,95 @@
 				<section class="armorclass">
 					<div class="main">
 						<div class="box">
-							<div class="label-container"><label for="ac">Armor Class</label></div>
+							<div class="label-container"><label for="ac" class="breakword">Armor Class</label></div>
 							<div class="holder"><input name="ac" placeholder="10" type="text" /></div>
 						</div>
 					</div>
 					<div class="additional">
-						
+						<div class="box">
+							<div class="label-container"><label for="aca">A</label></div>
+							<div class="holder"><input name="aca" type="text" /></div>
+						</div>
+						<div class="box">
+							<div class="label-container"><label for="acb">B</label></div>
+							<div class="holder"><input name="acb" type="text" /></div>
+						</div>
+						<div class="box">
+							<div class="label-container"><label for="acdes">DES</label></div>
+							<div class="holder"><input name="acdes" type="text" /></div>
+						</div>
+						<div class="box">
+							<div class="label-container"><label for="acother">Other</label></div>
+							<div class="holder"><input name="acother" type="text" /></div>
+						</div>
+					</div>
+				</section>
+				<section class="initiative">
+					<div class="main">
+						<div class="box">
+							<div class="label-container"><label for="initiative">Initiative</label></div>
+							<div class="holder"><input name="initiative" placeholder="+0" type="text" /></div>
+						</div>
+					</div>
+					<div class="additional">
+						<div class="box">
+							<div class="label-container"><label for="inides">DES</label></div>
+							<div class="holder"><input name="inides" type="text" /></div>
+						</div>
+						<div class="box">
+							<div class="label-container"><label for="iniother">Other</label></div>
+							<div class="holder"><input name="iniother" type="text" /></div>
+						</div>
+					</div>
+				</section>
+				<section class="speed">
+					<div class="main">
+						<div class="box">
+							<div class="label-container"><label for="speed">Speed</label></div>
+							<div class="holder"><input name="speed" placeholder="30" type="text" /></div>
+						</div>
+					</div>
+					<div class="additional">
+						<div class="box">
+							<div class="label-container"><label for="speedbase">Base</label></div>
+							<div class="holder"><input name="speedbase" type="text" /></div>
+						</div>
+						<div class="box">
+							<div class="label-container"><label for="speedother">Other</label></div>
+							<div class="holder"><input name="speedother" type="text" /></div>
+						</div>
+					</div>
+				</section>
+				<section class="hitpoints">
+					<label class="title" for="maxhp">Hit Points</label>
+					<div class="main">
+						<div class="total">
+							<input name="maxhp" placeholder="10" type="text" />
+						</div>
+						<div class="current">
+							<input name="currenthp" type="text" />
+						</div>
+					</div>
+					<div class="temporal">
+						<div>
+							<label for="temphp">Temporary</label>
+							<input name="temphp" type="text" />
+						</div>
+					</div>
+				</section>
+				<section class="deathsave">
+					<div>
+						<input type="checkbox" name="save1" class="css-checkbox"/>
+						<label for="save1" class="css-label lite-x-green"></label>
+						<input type="checkbox" name="save2" class="css-checkbox"/>
+						<label for="save2" class="css-label lite-x-green"></label>
+						<input type="checkbox" name="save3" class="css-checkbox"/>
+						<label for="save3" class="css-label lite-x-green"></label>
+					</div>
+					<div>
+						<input type="checkbox" />
+						<input type="checkbox" />
+						<input type="checkbox" />
 					</div>
 				</section>
 			</section>
