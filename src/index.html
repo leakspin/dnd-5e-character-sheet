@@ -143,21 +143,96 @@
 					</div>
 				</section>
 				<section class="deathsave">
-					<div class="customcheckbox">
-						<input type="checkbox" name="save1" class="css-checkbox"/>
-						<label for="save1" class="css-label lite-x-green"></label>
-						<input type="checkbox" name="save2" class="css-checkbox"/>
-						<label for="save2" class="css-label lite-x-green"></label>
-						<input type="checkbox" name="save3" class="css-checkbox"/>
-						<label for="save3" class="css-label lite-x-green"></label>
+					<div>
+						<input type="checkbox" name="save1" class="green" />
+						<input type="checkbox" name="save2" class="green" />
+						<input type="checkbox" name="save3" class="green" />
 					</div>
 					<div>
-						<input type="checkbox" />
-						<input type="checkbox" />
-						<input type="checkbox" />
+						<input type="checkbox" name="death1" class="red" />
+						<input type="checkbox" name="death2" class="red" />
+						<input type="checkbox" name="death3" class="red" />
+					</div>
+				</section>
+				<section class="hitdice">
+					<div>
+						<label onclick="app.totalhd_clicked()" for="totalhd">Total</label><input name="totalhd" placeholder="2d10" type="text" />
+					</div>
+					<div>
+						<label for="remaininghd">Hit Dice</label><input name="remaininghd" type="text" />
 					</div>
 				</section>
 			</section>
+			<div class="separator"></div>
+			<section>
+				<section class="attributes">
+					<div class="scores">
+						<ul>
+						<li>
+							<div class="score">
+							<input name="Strengthmod" placeholder="+0" class="statmod"/>
+							</div>
+							<div class="modifier">
+								<label for="Strengthscore">Strength</label><input name="Strengthscore" placeholder="10" class="stat"/>
+							</div>
+						</li>
+						<li>
+							<div class="score">
+								<input name="Dexteritymod" placeholder="+0" class=statmod/>
+							</div>
+							<div class="modifier">
+								<label for="Dexterityscore">Dexterity</label><input name="Dexterityscore" placeholder="10" class="stat"/>
+							</div>
+						</li>
+						<li>
+							<div class="score">
+							<label for="Constitutionscore">Constitution</label><input name="Constitutionscore" placeholder="10" class="stat"/>
+							</div>
+							<div class="modifier">
+							<input name="Constitutionmod" placeholder="+0" class="statmod"/>
+							</div>
+						</li>
+						<li>
+							<div class="score">
+							<label for="Wisdomscore">Wisdom</label><input name="Wisdomscore" placeholder="10" class="stat"/>
+							</div>
+							<div class="modifier">
+							<input name="Wisdommod" placeholder="+0" />
+							</div>
+						</li>
+						<li>
+							<div class="score">
+							<label for="Intelligencescore">Intelligence</label><input name="Intelligencescore" placeholder="10" class="stat"/>
+							</div>
+							<div class="modifier">
+							<input name="Intelligencemod" placeholder="+0" class="statmod"/>
+							</div>
+						</li>
+						<li>
+							<div class="score">
+							<label for="Charismascore">Charisma</label><input name="Charismascore" placeholder="10" class="stat"/>
+							</div>
+							<div class="modifier">
+							<input name="Charismamod" placeholder="+0" class="statmod"/>
+							</div>
+						</li>
+						</ul>
+					</div>
+				</section>
+			</section>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
+			<div class="separator"></div>
 			<section>
 				<section class="attributes">
 				<div class="scores">

@@ -4,21 +4,20 @@ $faded: #dddddd;
 $faded-light: #eeeeee;
 $faded-dark: #bbbbbb;
 $radius: 10px;
-$gutter: 10px;
+$gutter: 5px;
 $bubble-size: 10px;
 $small-box-width: 30px;
 $large-box-width: 70px;
 
-.red {
-  background: red;
-}
-
-.blue {
-  background: blue;
-}
-
 .hide {
   display: none !important;
+}
+
+.separator {
+  width: 100%;
+  height: 1px;
+  border-bottom: 1px solid black;
+  margin: 5px 0;
 }
 
 textarea {
@@ -46,47 +45,14 @@ input[type="checkbox"] {
   order: 1;
   &:checked {
     background-color: black;
-  }
 
-  &.css-checkbox {
-    position: absolute; 
-    overflow: hidden; 
-    clip: rect(0 0 0 0); 
-    height:1px; 
-    width:1px; 
-    margin:-1px; 
-    padding:0;
-    border:0;
-
-    + label.css-label {
-      padding-left:20px;
-      height:15px; 
-      display:inline-block;
-      line-height:15px;
-      background-repeat:no-repeat;
-      background-position: 0 0;
-      font-size:15px;
-      vertical-align:middle;
-      cursor:pointer;
+    &.green {
+      background-color: green;
     }
 
-    &:checked + label.css-label {
-      background-position: 0 -15px;
+    &.red {
+      background-color: red;
     }
-  }
-}
-
-.lite-x-red{background-image:url('/static/img/lite-x-red.png');}
-.lite-x-green{background-image:url('/static/img/lite-x-green.png');}
-
-.customcheckbox {
-  label {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
   }
 }
 
@@ -190,23 +156,6 @@ form.charsheet {
     flex-direction: row;
     flex-wrap: wrap;
     margin-top: $gutter * 2;
-    // div.label-container {
-    //   position: relative;
-    //   width: 100%;
-    //   height: $small-box-width - $radius - 2px;
-    //   margin-top: $radius / 2 + 1px;
-    //   border: 1px solid black;
-    //   border-left: 0;
-    //   text-align: center;
-    //   > label {
-    //     position: absolute;
-    //     left: 0;
-    //     top: 1px;
-    //     transform: translate(0%, 50%);
-    //     width: 100%;
-    //     font-size: 8px;
-    //   }
-    // }
     > section {
       flex-basis: 100%;
       display: flex;
@@ -276,7 +225,7 @@ form.charsheet {
           }
         }
 
-        &.armorclass, &.initiative, &.speed {
+        &.armorclass, &.initiative, &.speed, &.deathsave {
           flex-direction: row;
 
           .main {
@@ -336,6 +285,7 @@ form.charsheet {
             background-color: transparent;
             border: 0;
             border-bottom: 1px solid black;
+            width: 70px;
           }
 
           .main {
@@ -348,17 +298,83 @@ form.charsheet {
                 border-radius: 35px;
                 width: 45px;
                 height: 45px;
+                font-size: 25px;
               }
             }
 
             .current {
               display: flex;
+
+              input {
+                font-size: 25px;
+              }
             }
           }
 
           .temporal {
             div {
               display: flex;
+            }
+          }
+        }
+
+        &.hitdice {
+          flex-direction: column;
+          text-align: center;
+
+          input {
+            border: 0;
+            border-bottom: 1px solid black;
+            width: 70px;
+          }
+        }
+
+        &.attributes {
+          flex-direction: column;
+          
+          .score {
+            margin-top: 30px;
+            width: 104px;
+            height: 60px;
+            background-color: #6C6;
+            position: relative;
+            display: flex;
+            align-content: center;
+
+            &:before {
+              content: " ";
+              width: 0;
+              height: 0;
+              border-bottom: 30px solid #6C6;
+              border-left: 52px solid transparent;
+              border-right: 52px solid transparent;
+              position: absolute;
+              top: -30px;
+            }
+
+            &:after {
+              content: "";
+              width: 0;
+              position: absolute;
+              bottom: -30px;
+              border-top: 30px solid #6C6;
+              border-left: 52px solid transparent;
+              border-right: 52px solid transparent;
+            }
+
+            input {
+              width: 100%;
+              padding: 0;
+              border: 0;
+              background: transparent;
+            }
+          }
+
+          .modifier {
+            position: relative;
+
+            .stat {
+              width: 30px;
             }
           }
         }
