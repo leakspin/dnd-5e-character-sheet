@@ -54,17 +54,27 @@ class App {
         });
         
         document.querySelector("[name='totalhd']").addEventListener('input', this.totalhd_clicked);
-        document.querySelector("[name='Strengthscore']").addEventListener('input', this.carryingcapacity);
+        document.querySelector("[name='Strengthscore']").addEventListener('input', this.strengthskills);
+        document.querySelector("[name='Wisdomscore']").addEventListener('input', this.wisdomskills);
+        document.querySelector("[name='Intelligencescore']").addEventListener('input', this.intelligenceskills);
     }
 
     totalhd_clicked() {
         document.querySelector("[name='remaininghd']").value = document.querySelector("[name='totalhd']").value;
     }
 
-    carryingcapacity() {
+    strengthskills() {
         document.querySelector("[name='Carryingcapacity']").value = parseInt(document.querySelector("[name='Strengthmod']").value) * 15;
         document.querySelector("[name='Maxweigth']").value = parseInt(document.querySelector("[name='Strengthmod']").value) * 30;
         document.querySelector("[name='Pushdrag']").value = parseInt(document.querySelector("[name='Strengthmod']").value) * 30;
+    }
+
+    wisdomskills() {
+        document.querySelector("[name='passiveperception']").value = parseInt(document.querySelector("[name='Wisdommod']").value) + 10;
+    }
+
+    intelligenceskills() {
+        document.querySelector("[name='passiveinvestigation']").value = parseInt(document.querySelector("[name='Investigationmod']").value) + 10;
     }
 }
 
