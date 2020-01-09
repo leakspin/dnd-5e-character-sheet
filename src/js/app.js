@@ -54,10 +54,17 @@ class App {
         });
         
         document.querySelector("[name='totalhd']").addEventListener('input', this.totalhd_clicked);
+        document.querySelector("[name='Strengthscore']").addEventListener('input', this.carryingcapacity);
     }
 
     totalhd_clicked() {
         document.querySelector("[name='remaininghd']").value = document.querySelector("[name='totalhd']").value;
+    }
+
+    carryingcapacity() {
+        document.querySelector("[name='Carryingcapacity']").value = parseInt(document.querySelector("[name='Strengthmod']").value) * 15;
+        document.querySelector("[name='Maxweigth']").value = parseInt(document.querySelector("[name='Strengthmod']").value) * 30;
+        document.querySelector("[name='Pushdrag']").value = parseInt(document.querySelector("[name='Strengthmod']").value) * 30;
     }
 }
 
