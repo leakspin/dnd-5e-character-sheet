@@ -76,6 +76,13 @@ class App {
     intelligenceskills() {
         document.querySelector("[name='passiveinvestigation']").value = parseInt(document.querySelector("[name='Investigationmod']").value) + 10;
     }
+
+    save() {
+        let data = {};
+        document.querySelectorAll('input, textarea').forEach(element => {
+            data[element.name] = element.value;
+        });
+    }
 }
 
 window.app = new App();
