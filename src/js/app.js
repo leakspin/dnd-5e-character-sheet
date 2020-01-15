@@ -86,14 +86,14 @@ class App {
         template.querySelector('#json-save').value = JSON.stringify(data);
         document.querySelector('#popup-box').innerHTML = '';
         document.querySelector('#popup-box').append(template);
-        document.querySelector('#popup').classList.remove('hide');
+        this.openPopup();
     }
 
     loadPopup() {
         let template = document.querySelector('template#template-load-json').content.cloneNode(true);
         document.querySelector('#popup-box').innerHTML = '';
         document.querySelector('#popup-box').append(template);
-        document.querySelector('#popup').classList.remove('hide');
+        this.openPopup();
     }
 
     load() {
@@ -106,9 +106,17 @@ class App {
         this.closePopup();
     }
 
+    openPopup() {
+        document.querySelector('#popup').classList.remove('hide');
+        document.querySelector('#popup-background').classList.remove('hide');
+        document.body.style.overflow = 'hidden';
+    }
+
     closePopup() {
         document.querySelector('#popup').classList.add('hide');
+        document.querySelector('#popup-background').classList.add('hide');
         document.querySelector('#popup-box').innerHTML = '';
+        document.body.style.overflow = 'initial';
     }
 }
 
