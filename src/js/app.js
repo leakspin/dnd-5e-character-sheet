@@ -74,14 +74,41 @@ class App {
     }
 
     intelligenceskills() {
-        document.querySelector("[name='passiveinvestigation']").value = parseInt(document.querySelector("[name='Investigationmod']").value) + 10;
+        document.querySelector("[name='passiveinvestigation']").value = parseInt(document.querySelector("[name='Intelligencemod']").value) + 10;
     }
 
     save() {
         let data = {};
+        let template = document.querySelector('template#template-save-json').content.cloneNode(true);
         document.querySelectorAll('input, textarea').forEach(element => {
             data[element.name] = element.value;
         });
+        template.querySelector('#json-save').value = JSON.stringify(data);
+        document.querySelector('#popup-box').innerHTML = '';
+        document.querySelector('#popup-box').append(template);
+        document.querySelector('#popup').classList.remove('hide');
+    }
+
+    loadPopup() {
+        let template = document.querySelector('template#template-load-json').content.cloneNode(true);
+        document.querySelector('#popup-box').innerHTML = '';
+        document.querySelector('#popup-box').append(template);
+        document.querySelector('#popup').classList.remove('hide');
+    }
+
+    load() {
+        let data = JSON.parse(document.querySelector('#json-load').value);
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                document.querySelector('[name="' + key + '"').value = data[key];
+            }
+        }
+        this.closePopup();
+    }
+
+    closePopup() {
+        document.querySelector('#popup').classList.add('hide');
+        document.querySelector('#popup-box').innerHTML = '';
     }
 }
 

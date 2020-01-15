@@ -34,6 +34,10 @@
 						</li>
 					</ul>
 				</section>
+				<section class="options">
+					<div class="button" onclick="app.save()">Save</div>
+					<div class="button" onclick="app.loadPopup()">Load</div>
+				</section>
 			</header>
 			<main>
 				<section>
@@ -447,26 +451,26 @@
 								<div class="input"><div>Platinum</div><input type="text" name="platinum" /></div>
 								<div class="title">GEMS</div>
 								<div class="separator"></div>
-								<div><input type="text" class="gems" /></div>
+								<div><input type="text" name="gems" /></div>
 								<div class="title">OTHER</div>
 								<div class="separator"></div>
-								<div><input type="text" class="moneyother" /></div>
+								<div><input type="text" name="moneyother" /></div>
 							</section>
 							<section class="conditions">
 								<div class="title">CONDITIONS</div>
 								<div class="separator"></div>
 								<div>Tireness</div>
 								<div class="separator"></div>
-								<div><input type="text" class="tireness" /></div>
+								<div><input type="text" name="tireness" /></div>
 								<div>Sickness</div>
 								<div class="separator"></div>
-								<div><input type="text" class="sickness" /></div>
+								<div><input type="text" name="sickness" /></div>
 								<div>Curses</div>
 								<div class="separator"></div>
-								<div><input type="text" class="curses" /></div>
+								<div><input type="text" name="curses" /></div>
 								<div>Other</div>
 								<div class="separator"></div>
-								<div><input type="text" class="conditionsothers" /></div>
+								<div><input type="text" name="conditionsothers" /></div>
 							</section>
 						</section>
 						<section class="class-abilities">
@@ -517,5 +521,17 @@
 				</section>
 			</main>
 		</form>
+		<div id="popup" class="hide"><div id="popup-box"></div></div>
+		<template id="template-save-json">
+			<div id="popup-close" onclick="app.closePopup()">X</div>
+			<div class="title">JSON Dump</div>
+			<textarea id="json-save"></textarea>
+		</template>
+		<template id="template-load-json">
+			<div id="popup-close" onclick="app.closePopup()">X</div>
+			<div class="title">JSON Load</div>
+			<textarea id="json-load"></textarea>
+			<div class="bottom"><div class="button" onclick="window.app.load()">Load</div></div>
+		</template>
 	</body>
 	</html>
