@@ -81,7 +81,11 @@ class App {
         let data = {};
         let template = document.querySelector('template#template-save-json').content.cloneNode(true);
         document.querySelectorAll('input, textarea').forEach(element => {
-            data[element.name] = element.value;
+            if (element.type == 'checkbox') {
+                data[element.name] = element.checked;
+            } else {
+                data[element.name] = element.value;
+            }
         });
         template.querySelector('#json-save').value = JSON.stringify(data);
         document.querySelector('#popup-box').innerHTML = '';
@@ -100,7 +104,12 @@ class App {
         let data = JSON.parse(document.querySelector('#json-load').value);
         for (const key in data) {
             if (data.hasOwnProperty(key)) {
-                document.querySelector('[name="' + key + '"').value = data[key];
+                const elem = document.querySelector('[name="' + key + '"');
+                if (elem.type == 'checkbox') {
+                    document.querySelector('[name="' + key + '"').checked = data[key];
+                } else {
+                    document.querySelector('[name="' + key + '"').value = data[key];
+                }
             }
         }
         this.closePopup();

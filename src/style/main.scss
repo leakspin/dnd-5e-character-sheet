@@ -660,6 +660,7 @@ form.charsheet {
 
           .money, .conditions {
             align-items: normal;
+            margin: 3px 8px;
 
             input {
               width: 100%;
@@ -718,6 +719,7 @@ form.charsheet {
       width: 100%;
       height: calc(100% - 40px - 20px);
       margin: 7px 0;
+      border: 1px solid black;
     }
 
     #popup-close {
