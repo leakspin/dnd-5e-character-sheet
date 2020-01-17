@@ -1,5 +1,69 @@
 class App {
     constructor() {
+        this.BASE_API_URL = 'https://dnd.adrianmora.dev/api/api.php';
+
+        if (typeof sessionStorage['user'] != 'undefined') {
+
+        } else {
+            this.loginPopup();
+        }
+    }
+
+    loginPopup() {
+        let template = document.querySelector('template#template-login').content.cloneNode(true);
+        document.querySelector('#popup-box').innerHTML = '';
+        document.querySelector('#popup-box').append(template);
+        this.openPopup();
+    }
+
+    registerPopup() {
+        let template = document.querySelector('template#template-register').content.cloneNode(true);
+        document.querySelector('#popup-box').innerHTML = '';
+        document.querySelector('#popup-box').append(template);
+        this.openPopup();
+    }
+
+    login() {
+        fetch(app.BASE_API_URL + '?method=login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                user: document.querySelector('#popup-box input[name="user"]').value,
+                pass: document.querySelector('#popup-box input[name="pass"]').value,
+            })
+        }).then(res => {
+            return res.json();
+        }).then(data => {
+            console.log(data);
+        });
+    }
+
+    register() {
+        //register-message
+        if (document.querySelector('#popup-box input[name="pass"]').value == document.querySelector('#popup-box input[name="passconf"]').value) {
+            fetch(app.BASE_API_URL + '?method=register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    user: document.querySelector('#popup-box input[name="user"]').value,
+                    pass: document.querySelector('#popup-box input[name="pass"]').value,
+                })
+            }).then(res => {
+                return res.json();
+            }).then(data => {
+                app.loginPopup();
+                document.querySelector('#popup-box #login-message').textContent = data.message;
+            });
+        } else {
+            document.querySelector('#popup-box #register-message').textContent = "Passwords don't match";
+        }
+    }
+
+    initSheet() {
         let stats = document.getElementsByClassName('stat');
     
         for (let index = 0; index < stats.length; index++) {
@@ -91,6 +155,13 @@ class App {
         document.querySelector('#popup-box').innerHTML = '';
         document.querySelector('#popup-box').append(template);
         this.openPopup();
+
+        // fetch('http://vps.adrianmora.me:8889/api.php?method=save', {
+        //     method: 'POST',
+        //     body: {
+
+        //     }
+        // });
     }
 
     loadPopup() {

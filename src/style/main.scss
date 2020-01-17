@@ -737,5 +737,10 @@ form.charsheet {
       display: flex;
       justify-content: center;
     }
+
+    .popup-link {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 }

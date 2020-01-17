@@ -38,6 +38,7 @@
 				<section class="options">
 					<div class="button" onclick="app.save()">Save</div>
 					<div class="button" onclick="app.loadPopup()">Load</div>
+					<div id="google-user"></div>
 				</section>
 			</header>
 			<main>
@@ -533,6 +534,20 @@
 		</form>
 		<div id="popup-background" class="hide"></div>
 		<div id="popup" class="hide"><div id="popup-box"></div></div>
+		<template id="template-login">
+			<div class="title">Login</div>
+			<div class="bottom"><input name="user" placeholder="User" /><input type="password" name="pass" placeholder="Pass" /></div>
+			<div class="bottom" id="login-message"></div>
+			<div class="bottom"><div onclick="window.app.registerPopup()" class="popup-link">Register</div></div>
+			<div class="bottom"><div class="button" onclick="window.app.login()">Login</div></div>
+		</template>
+		<template id="template-register">
+			<div class="title">Register</div>
+			<div class="bottom"><input name="user" placeholder="User" /><input type="password" name="pass" placeholder="Pass" /><input type="password" name="passconf" placeholder="Pass" /></div>
+			<div class="bottom" id="register-message"></div>
+			<div class="bottom"><div onclick="window.app.loginPopup()" class="popup-link">Login</div></div>
+			<div class="bottom"><div class="button" onclick="window.app.register()">Register</div></div>
+		</template>
 		<template id="template-save-json">
 			<div id="popup-close" onclick="app.closePopup()">X</div>
 			<div class="title">JSON Dump</div>
@@ -545,4 +560,4 @@
 			<div class="bottom"><div class="button" onclick="window.app.load()">Load</div></div>
 		</template>
 	</body>
-	</html>
+</html>
