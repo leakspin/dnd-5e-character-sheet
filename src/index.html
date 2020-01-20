@@ -36,9 +36,18 @@
 					</ul>
 				</section>
 				<section class="options">
-					<div class="button" onclick="app.export()">Export</div>
-					<div class="button" onclick="app.exportPopup()">Import</div>
-					<div id="google-user"></div>
+					<div>
+						<div class="button" onclick="app.export()">Export</div>
+						<div class="button" onclick="app.exportPopup()">Import</div>
+					</div>
+					<div>
+						<div id="user"></div>
+						<div id="logout" class="button" onclick="app.logout()">Logout</div>
+					</div>
+					<div>
+						<div id="save" class="button" onclick="app.save()">Save</div>
+						<div id="statusMessage"></div>
+					</div>
 				</section>
 			</header>
 			<main>

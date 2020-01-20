@@ -6,10 +6,11 @@ class App {
             this.callApi('GET', 'checkLogin', '', {} ,{}, true)
             .then(data => {
                 if (data.status == 'OK') {
+                    document.querySelector('#user').textContent = data.data.user;
                     app.charactersPopup();
                 } else {
                     sessionStorage.removeItem('token');
-                    this.loginPopup();
+                    app.loginPopup();
                 }
             });
         } else {
@@ -61,6 +62,7 @@ class App {
         .then(data => {
             if (data.status == 'OK') {
                 sessionStorage['token'] = data.data.session;
+                document.querySelector('#user').textContent = data.data.user;
                 app.charactersPopup();
             } else {
                 document.querySelector('#popup-box #login-message').textContent = data.message;
@@ -119,6 +121,19 @@ class App {
         app.callApi('GET', 'getCharacter', '&id=' + id, {}, {}, true)
         .then(data => {
             app.loadData(JSON.parse(data.data.data));
+
+            let charId = document.querySelector('input[name="characterId]');
+            if (charId) {
+                charId.remove();
+            }
+
+            charId = document.createElement('input');
+            charId.name = 'characterId';
+            charId.type = 'hidden';
+            charId.value = data.data.id;
+            document.querySelector('form').appendChild(charId);
+
+            app.initSheet();
             app.closePopup();
         });
     }
@@ -235,11 +250,13 @@ class App {
     }
 
     save() {
+        document.querySelector('#statusMessage').textContent = 'Saving...';
         this.callApi('POST', 'saveCharacter', '', this.getCharData(), {}, true)
         .then(data => {
             if (data.status == 'OK') {
-                console.log('Save correct');
+                document.querySelector('#statusMessage').textContent = 'Saved';
             } else {
+                document.querySelector('#statusMessage').textContent = 'Error saving';
                 console.error(data.message);
             }
         });
@@ -253,6 +270,11 @@ class App {
                 element.value = data.hasOwnProperty(element.name) ? data[element.name] : '';
             }
         });
+    }
+
+    logout() {
+        sessionStorage.removeItem('token');
+        location.reload();
     }
 
     openPopup() {

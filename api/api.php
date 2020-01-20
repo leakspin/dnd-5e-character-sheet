@@ -32,7 +32,7 @@ try {
             $encrypted = openssl_encrypt($ret['user'] . '|' . date('YmdHis'), ALG_ENCRYPT, SECRET, OPENSSL_RAW_DATA, $iv);
 
             logMsg('INFO', 'User ' . $ret['user'] . ' logged successfully');
-            sendResponse(['status' => 'OK', 'message' => 'Login successfully', 'data' => ['session' => bin2hex($encrypted) . '::' . bin2hex($iv)]]);
+            sendResponse(['status' => 'OK', 'message' => 'Login successfully', 'data' => ['session' => bin2hex($encrypted) . '::' . bin2hex($iv), 'user' => $ret['user']]]);
         } else {
             sendResponse(['status' => 'ERROR', 'message' => 'Error on login. Please, check user and pass.']);
         }
@@ -42,7 +42,7 @@ try {
         sendResponse(['status' => 'OK', 'message' => 'User registered correctly']);
     } elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['method']) && $_GET['method'] == 'checkLogin') {
         $user = getSessionUser($db);
-        sendResponse(['status' => 'OK']);
+        sendResponse(['status' => 'OK', 'data' => ['user' => $user['user']]]);
     } elseif ($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['method']) && $_GET['method'] == 'getCharacters') {
         $user = getSessionUser($db);
         sendResponse(['status' => 'OK', 'data' => getCharacters($db, $user['id'])]);

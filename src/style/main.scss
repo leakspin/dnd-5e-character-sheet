@@ -199,13 +199,20 @@ form.charsheet {
     }
     section.options {
       display: flex;
-      flex-direction: column;
+      flex-direction: row;
       align-items: center;
       justify-content: center;
       width: 20%;
 
       > div {
-        margin: 3px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        > div {
+          margin: 3px;
+        }
       }
     }
   }
