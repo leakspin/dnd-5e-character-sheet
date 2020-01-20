@@ -2,11 +2,41 @@ class App {
     constructor() {
         this.BASE_API_URL = 'https://dnd.adrianmora.dev/api/api.php';
 
-        if (typeof sessionStorage['user'] != 'undefined') {
-
+        if (typeof sessionStorage['token'] != 'undefined') {
+            this.callApi('GET', 'checkLogin', '', {} ,{}, true)
+            .then(data => {
+                if (data.status == 'OK') {
+                    app.charactersPopup();
+                } else {
+                    sessionStorage.removeItem('token');
+                    this.loginPopup();
+                }
+            });
         } else {
             this.loginPopup();
         }
+    }
+
+    callApi(method, apiMethod, extraUrl = '', data = {}, headers = {}, useToken = false) {
+        let fetchParams = {
+            method: method,
+            headers: {
+                ...headers
+            }
+        };
+
+        if (method == 'POST' || method == 'PUT') {
+            fetchParams.headers['Content-Type'] = 'application/json';
+            fetchParams.body = JSON.stringify(data);
+        }
+
+        if (useToken) {
+            fetchParams.headers['X-User-Session'] = sessionStorage['token'];
+        }
+
+        return fetch(this.BASE_API_URL + '?method=' + apiMethod + extraUrl, fetchParams).then(res => {
+            return res.json();
+        });
     }
 
     loginPopup() {
@@ -24,43 +54,73 @@ class App {
     }
 
     login() {
-        fetch(app.BASE_API_URL + '?method=login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                user: document.querySelector('#popup-box input[name="user"]').value,
-                pass: document.querySelector('#popup-box input[name="pass"]').value,
-            })
-        }).then(res => {
-            return res.json();
-        }).then(data => {
-            console.log(data);
+        this.callApi('POST', 'login', '', {
+            user: document.querySelector('#popup-box input[name="user"]').value,
+            pass: document.querySelector('#popup-box input[name="pass"]').value
+        })
+        .then(data => {
+            if (data.status == 'OK') {
+                sessionStorage['token'] = data.data.session;
+                app.charactersPopup();
+            } else {
+                document.querySelector('#popup-box #login-message').textContent = data.message;
+            }
         });
     }
 
     register() {
-        //register-message
         if (document.querySelector('#popup-box input[name="pass"]').value == document.querySelector('#popup-box input[name="passconf"]').value) {
-            fetch(app.BASE_API_URL + '?method=register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    user: document.querySelector('#popup-box input[name="user"]').value,
-                    pass: document.querySelector('#popup-box input[name="pass"]').value,
-                })
-            }).then(res => {
-                return res.json();
+            this.callApi('POST', 'register', '', {
+                user: document.querySelector('#popup-box input[name="user"]').value,
+                pass: document.querySelector('#popup-box input[name="pass"]').value
             }).then(data => {
-                app.loginPopup();
-                document.querySelector('#popup-box #login-message').textContent = data.message;
+                if (data.status == 'OK') {
+                    app.loginPopup();
+                    document.querySelector('#popup-box #login-message').textContent = data.message;
+                } else {
+                    document.querySelector('#popup-box #register-message').textContent = data.message;
+                }
             });
         } else {
             document.querySelector('#popup-box #register-message').textContent = "Passwords don't match";
         }
+    }
+
+    charactersPopup() {
+        let template = document.querySelector('template#template-characters').content.cloneNode(true);
+
+        this.callApi('GET', 'getCharacters', '', {}, {}, true)
+        .then(data => {
+            if (data.status == 'OK') {
+                let characters = template.querySelector('#characters');
+                data.data.forEach(character => {
+                    let node = document.createElement('div');
+                    node.addEventListener('click', app.loadCharacter);
+                    node.classList.add('bottom');
+                    node.dataset['charId'] = character.id;
+                    node.textContent = character.name;
+                    characters.append(node);
+                });
+                document.querySelector('#popup-box').innerHTML = '';
+                document.querySelector('#popup-box').append(template);
+                this.openPopup();
+            }
+        });
+    }
+
+    newCharacter() {
+        this.closePopup();
+        this.initSheet();
+    }
+
+    loadCharacter(event) {
+        let element = event.target;
+        let id = element.dataset.charId;
+        app.callApi('GET', 'getCharacter', '&id=' + id, {}, {}, true)
+        .then(data => {
+            app.loadData(JSON.parse(data.data.data));
+            app.closePopup();
+        });
     }
 
     initSheet() {
@@ -141,9 +201,8 @@ class App {
         document.querySelector("[name='passiveinvestigation']").value = parseInt(document.querySelector("[name='Intelligencemod']").value) + 10;
     }
 
-    save() {
+    getCharData() {
         let data = {};
-        let template = document.querySelector('template#template-save-json').content.cloneNode(true);
         document.querySelectorAll('input, textarea').forEach(element => {
             if (element.type == 'checkbox') {
                 data[element.name] = element.checked;
@@ -151,39 +210,49 @@ class App {
                 data[element.name] = element.value;
             }
         });
-        template.querySelector('#json-save').value = JSON.stringify(data);
-        document.querySelector('#popup-box').innerHTML = '';
-        document.querySelector('#popup-box').append(template);
-        this.openPopup();
-
-        // fetch('http://vps.adrianmora.me:8889/api.php?method=save', {
-        //     method: 'POST',
-        //     body: {
-
-        //     }
-        // });
+        return data;
     }
 
-    loadPopup() {
-        let template = document.querySelector('template#template-load-json').content.cloneNode(true);
+    export() {
+        let template = document.querySelector('template#template-export-json').content.cloneNode(true);
+        template.querySelector('#json-export').value = JSON.stringify(this.getCharData());
         document.querySelector('#popup-box').innerHTML = '';
         document.querySelector('#popup-box').append(template);
         this.openPopup();
     }
 
-    load() {
-        let data = JSON.parse(document.querySelector('#json-load').value);
-        for (const key in data) {
-            if (data.hasOwnProperty(key)) {
-                const elem = document.querySelector('[name="' + key + '"');
-                if (elem.type == 'checkbox') {
-                    document.querySelector('[name="' + key + '"').checked = data[key];
-                } else {
-                    document.querySelector('[name="' + key + '"').value = data[key];
-                }
-            }
-        }
+    importPopup() {
+        let template = document.querySelector('template#template-import-json').content.cloneNode(true);
+        document.querySelector('#popup-box').innerHTML = '';
+        document.querySelector('#popup-box').append(template);
+        this.openPopup();
+    }
+
+    import() {
+        let data = JSON.parse(document.querySelector('#json-import').value);
+        this.loadData(data);
         this.closePopup();
+    }
+
+    save() {
+        this.callApi('POST', 'saveCharacter', '', this.getCharData(), {}, true)
+        .then(data => {
+            if (data.status == 'OK') {
+                console.log('Save correct');
+            } else {
+                console.error(data.message);
+            }
+        });
+    }
+
+    loadData(data) {
+        document.querySelectorAll('input, textarea').forEach(element => {
+            if (element.type == 'checkbox') {
+                element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+            } else {
+                element.value = data.hasOwnProperty(element.name) ? data[element.name] : '';
+            }
+        });
     }
 
     openPopup() {

@@ -36,8 +36,8 @@
 					</ul>
 				</section>
 				<section class="options">
-					<div class="button" onclick="app.save()">Save</div>
-					<div class="button" onclick="app.loadPopup()">Load</div>
+					<div class="button" onclick="app.export()">Export</div>
+					<div class="button" onclick="app.exportPopup()">Import</div>
 					<div id="google-user"></div>
 				</section>
 			</header>
@@ -548,16 +548,21 @@
 			<div class="bottom"><div onclick="window.app.loginPopup()" class="popup-link">Login</div></div>
 			<div class="bottom"><div class="button" onclick="window.app.register()">Register</div></div>
 		</template>
-		<template id="template-save-json">
+		<template id="template-export-json">
 			<div id="popup-close" onclick="app.closePopup()">X</div>
-			<div class="title">JSON Dump</div>
-			<textarea id="json-save"></textarea>
+			<div class="title">JSON Export</div>
+			<textarea id="json-export"></textarea>
 		</template>
-		<template id="template-load-json">
+		<template id="template-characters">
+			<div class="title">Characters</div>
+			<div id="characters"></div>
+			<div class="bottom"><div class="button" onclick="app.newCharacter()">Create new character</div></div>
+		</template>
+		<template id="template-import-json">
 			<div id="popup-close" onclick="app.closePopup()">X</div>
-			<div class="title">JSON Load</div>
-			<textarea id="json-load"></textarea>
-			<div class="bottom"><div class="button" onclick="window.app.load()">Load</div></div>
+			<div class="title">JSON Import</div>
+			<textarea id="json-import"></textarea>
+			<div class="bottom"><div class="button" onclick="window.app.import()">Import</div></div>
 		</template>
 	</body>
 </html>
