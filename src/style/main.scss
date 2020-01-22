@@ -846,6 +846,17 @@ form.charsheet {
       }
     }
 
+    #characters {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      > div {
+        margin: 5px 0;
+        min-width: 100px;
+      }
+    }
+
     @media #{$phone} {
       width: 100%;
       height: 100%;
