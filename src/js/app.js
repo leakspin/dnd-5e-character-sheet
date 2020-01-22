@@ -98,7 +98,8 @@ class App {
                 data.data.forEach(character => {
                     let node = document.createElement('div');
                     node.addEventListener('click', app.loadCharacter);
-                    node.classList.add('bottom');
+                    node.classList.add('center');
+                    node.classList.add('button');
                     node.dataset['charId'] = character.id;
                     node.textContent = character.name;
                     characters.append(node);

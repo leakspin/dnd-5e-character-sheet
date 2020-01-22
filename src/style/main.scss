@@ -9,6 +9,8 @@ $bubble-size: 10px;
 $small-box-width: 30px;
 $large-box-width: 70px;
 
+$phone: "only screen and (max-width : 480px)";
+
 $str-color: #9f92a2;
 $dex-color: #3f9f6e;
 $con-color: #b74846;
@@ -39,6 +41,10 @@ $cha-color: #d77097;
   border: 1px solid black;
   border-radius: 4px;
   cursor: pointer;
+
+  &.green {
+    background-color: $dex-color;
+  }
 }
 
 .strength {
@@ -107,6 +113,22 @@ input[type="checkbox"] {
     &.red {
       background-color: red;
     }
+  }
+}
+
+section {
+  display: flex;
+}
+
+@media #{$phone} {
+  input[type="checkbox"] {
+    height: 25px;
+    width: 25px;
+    border-radius: 30px;
+  }
+
+  .button {
+    padding: 10px 20px;
   }
 }
 
@@ -226,7 +248,7 @@ form.charsheet {
       display: flex;
       flex-direction: row;
 
-      section {
+      > section {
         flex-basis: 100%;
         display: flex;
         flex-direction: column;
@@ -424,14 +446,12 @@ form.charsheet {
           }
         }
 
-        &.attributes {
-          flex-direction: column;
-          width: 100%;
-
-          .scores {
+        > section {
+          &.attributes {
+            flex-direction: column;
             width: 100%;
-
-            li {
+  
+            > div {
               display: flex;
               flex-direction: row;
               align-items: center;
@@ -442,14 +462,13 @@ form.charsheet {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                width: 100px;
-
+  
                 > div {
                   display: flex;
                   flex-direction: column;
                   align-items: center;
                   justify-content: center;
-
+  
                   .score {
                     margin-top: 15px;
                     width: 52px;
@@ -551,21 +570,19 @@ form.charsheet {
                 }
   
               }
-
+  
               .skills {
-                width: 200px;
-
                 .row {
                   display: flex;
                   flex-direction: row;
                   align-items: center;
-
+  
                   input[type="text"] {
                     border: 0;
                     border-bottom: 1px solid black;
                     width: 40px;
                     margin: 0 3px;
-
+  
                     &.noprofficency {
                       margin-left: 20px;
                     }
@@ -574,7 +591,7 @@ form.charsheet {
                   input[type="checkbox"] {
                     order: 0;
                   }
-
+  
                   label {
                     text-transform: none;
                   }
@@ -582,113 +599,165 @@ form.charsheet {
               }
             }
           }
-        }
-
-        &.additional-abilities {
-          width: 100%;
-          align-items: start;
-
-          .passive-perception, .passive-investigation, .languages, .tools {
+  
+          &.additional-abilities {
             width: 100%;
-            border: 1px solid black;
-            padding: 4px 10px;
-            margin: 5px 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            &.languages, &.tools {
-              flex-direction: column;
-
-              textarea {
-                width: 95%;
-                height: 65px;
-                border: 1px solid black;
-                margin: 5px;
-                background: transparent;
+            align-items: start;
+            flex-direction: column;
+  
+            .passive-perception, .passive-investigation, .languages, .tools {
+              width: 100%;
+              border: 1px solid black;
+              padding: 4px 10px;
+              margin: 5px 0;
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+  
+              &.languages, &.tools {
+                flex-direction: column;
+  
+                textarea {
+                  width: 95%;
+                  height: 65px;
+                  border: 1px solid black;
+                  margin: 5px;
+                  background: transparent;
+                }
+              }
+  
+              input {
+                margin-left: 5px;
+                border-radius: 4px;
+                width: 30px;
+                border: 0;
               }
             }
-
-            input {
-              margin-left: 5px;
-              border-radius: 4px;
-              width: 30px;
-              border: 0;
-            }
           }
-        }
-
-        &.portrait {
-          width: 100%;
-          flex-basis: 0;
-        }
-
-        &.class-resources, &.class-abilities, &.race-abilities {
-          width: 100%;
-          flex-basis: 0;
-
-          input {
+  
+          &.portrait {
             width: 100%;
-            border: 1px solid black;
-            border-bottom: 0;
-            padding: 0;
-
-            &:last-child {
-              border-bottom: 1px solid black;
-            }
+            flex-basis: 0;
           }
-        }
-
-        &.weapons {
-          width: 100%;
-          flex-basis: 0;
-
-          > div {
+  
+          &.class-resources, &.class-abilities, &.race-abilities {
             width: 100%;
-            display: flex;
-            justify-content: space-between;
-            text-align: center;
-            
-            div, input {
-              flex-basis: 100%;
-            }
-            
-            input {
-              border: 1px solid black;
-            }
-          }
-        }
-
-        &.moneyconditions {
-          display: flex;
-          flex-direction: row;
-          width: 100%;
-          flex-basis: 0;
-
-          .money, .conditions {
-            align-items: normal;
-            margin: 3px 8px;
-
+            flex-direction: column;
+  
             input {
               width: 100%;
-              border: 0;
-              border-bottom: 1px solid black;
+              border: 1px solid black;
+              border-bottom: 0;
+              padding: 0;
+  
+              &:last-child {
+                border-bottom: 1px solid black;
+              }
             }
-
-            .title {
-              text-align: center;
-            }
-
-            .input {
+          }
+  
+          &.weapons {
+            width: 100%;
+            flex-direction: column;
+  
+            > div {
+              width: 100%;
               display: flex;
               justify-content: space-between;
-
+              text-align: center;
+              
+              div, input {
+                flex-basis: 100%;
+              }
+              
               input {
-                width: 60px;
+                border: 1px solid black;
+              }
+            }
+          }
+  
+          &.moneyconditions {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            flex-basis: 0;
+  
+            .money, .conditions {
+              align-items: normal;
+              margin: 3px 8px;
+              flex-direction: column;
+  
+              input {
+                width: 100%;
+                border: 0;
+                border-bottom: 1px solid black;
+              }
+  
+              .title {
+                text-align: center;
+              }
+  
+              .input {
+                display: flex;
+                justify-content: space-between;
+  
+                input {
+                  width: 60px;
+                }
               }
             }
           }
         }
+
+      }
+    }
+  }
+
+  @media #{$phone} {
+    header {
+      flex-direction: column;
+      width: calc(100% - 10px);
+
+      section.charname {
+        width: 100%;
+        border-right: 1px solid black;
+        border-radius: 10px;
+        margin-bottom: 5px;
+      }
+
+      section.misc {
+        width: 100%;
+
+        ul li {
+          width: 50%;
+        }
+      }
+
+      section.options {
+        width: 100%;
+      }
+    }
+
+    main {
+      > section {
+        flex-wrap: wrap;
+
+        &:first-child > section {
+          flex-basis: calc(50% - 16px);
+          margin: 16px 8px;
+
+          &.hitpoints {
+            flex-basis: 100%;
+          }
+        }
+
+        > section {
+          flex-basis: calc(100% - 16px);
+        }
+      }
+
+      > section section.attributes .scores div .skills .row input[type="text"].noprofficency {
+        margin-left: 35px;
       }
     }
   }
@@ -721,6 +790,9 @@ form.charsheet {
     width: 60%;
     height: 60%;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     textarea {
       width: 100%;
@@ -740,14 +812,34 @@ form.charsheet {
       text-align: center;
     }
 
-    .bottom {
+    .center {
       display: flex;
       justify-content: center;
     }
 
-    .popup-link {
-      text-decoration: underline;
-      cursor: pointer;
+    .login, .register {
+      flex-direction: column;
+
+      input {
+        border: 1px solid black;
+        border-radius: 4px;
+      }
+    }
+    @media #{$phone} {
+      width: 100%;
+      height: 100%;
+
+      > * {
+        margin: 5px 0;
+      }
+  
+      .login, .register {
+        input {
+          margin: 5px 0;
+          height: 40px;
+          line-height: 40px;
+        }
+      }
     }
   }
 }
