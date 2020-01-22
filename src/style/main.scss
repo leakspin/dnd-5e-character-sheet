@@ -462,6 +462,7 @@ form.charsheet {
                 display: flex;
                 align-items: center;
                 justify-content: center;
+                width: 30%;
   
                 > div {
                   display: flex;
@@ -572,6 +573,8 @@ form.charsheet {
               }
   
               .skills {
+                width: 70%;
+
                 .row {
                   display: flex;
                   flex-direction: row;
@@ -643,6 +646,10 @@ form.charsheet {
           &.class-resources, &.class-abilities, &.race-abilities {
             width: 100%;
             flex-direction: column;
+
+            .title {
+              text-align: center;
+            }
   
             input {
               width: 100%;
@@ -665,9 +672,13 @@ form.charsheet {
               display: flex;
               justify-content: space-between;
               text-align: center;
+
+              &.title {
+                justify-content: center;
+              }
               
               div, input {
-                flex-basis: 100%;
+                width: 33%;
               }
               
               input {
@@ -752,12 +763,12 @@ form.charsheet {
         }
 
         > section {
-          flex-basis: calc(100% - 16px);
-        }
-      }
+          flex-basis: calc(100% - 6px);
 
-      > section section.attributes .scores div .skills .row input[type="text"].noprofficency {
-        margin-left: 35px;
+          > section.attributes > div .skills .row input[type="text"].noprofficency {
+            margin-left: 35px;
+          }
+        }
       }
     }
   }
