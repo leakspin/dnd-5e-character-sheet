@@ -42,6 +42,11 @@ class App {
 
     loginPopup() {
         let template = document.querySelector('template#template-login').content.cloneNode(true);
+        template.querySelector('input[name="pass"]').addEventListener('keypress', e => {
+            if (e.key === 'Enter') {
+                app.login();
+            }
+        });
         document.querySelector('#popup-box').innerHTML = '';
         document.querySelector('#popup-box').append(template);
         this.openPopup();
@@ -91,22 +96,31 @@ class App {
     charactersPopup() {
         let template = document.querySelector('template#template-characters').content.cloneNode(true);
 
-        this.callApi('GET', 'getCharacters', '', {}, {}, true)
+        app.callApi('GET', 'getCharacters', '', {}, {}, true)
         .then(data => {
             if (data.status == 'OK') {
                 let characters = template.querySelector('#characters');
                 data.data.forEach(character => {
                     let node = document.createElement('div');
-                    node.addEventListener('click', app.loadCharacter);
+                    let name = document.createElement('div');
+                    let del = document.createElement('div');
                     node.classList.add('center');
-                    node.classList.add('button');
+                    name.addEventListener('click', app.loadCharacter);
+                    del.addEventListener('click', app.deleteCharacter);
+                    name.classList.add('button');
+                    name.classList.add('charname');
+                    del.classList.add('button');
+                    del.classList.add('deletechar');
                     node.dataset['charId'] = character.id;
-                    node.textContent = character.name;
+                    name.textContent = character.name;
+                    del.textContent = 'X';
+                    node.appendChild(name);
+                    node.appendChild(del);
                     characters.append(node);
                 });
                 document.querySelector('#popup-box').innerHTML = '';
                 document.querySelector('#popup-box').append(template);
-                this.openPopup();
+                app.openPopup();
             }
         });
     }
@@ -117,7 +131,7 @@ class App {
     }
 
     loadCharacter(event) {
-        let element = event.target;
+        let element = event.target.parentNode;
         let id = element.dataset.charId;
         app.callApi('GET', 'getCharacter', '&id=' + id, {}, {}, true)
         .then(data => {
@@ -128,15 +142,34 @@ class App {
                 charId.remove();
             }
 
-            charId = document.createElement('input');
-            charId.name = 'characterId';
-            charId.type = 'hidden';
-            charId.value = data.data.id;
-            document.querySelector('form').appendChild(charId);
+            app.inputCharacterId(document.querySelector('form'), data.data.id);
 
             app.initSheet();
             app.closePopup();
         });
+    }
+
+    inputCharacterId(body, id) {
+        let elem = body.querySelector('input[name="characterId"]');
+        if (elem) {
+            elem.value = id;
+        } else {
+            let charId = document.createElement('input');
+            charId.name = 'characterId';
+            charId.type = 'hidden';
+            charId.value = id;
+            body.appendChild(charId);
+        }
+    }
+
+    deleteCharacter() {
+        let element = event.target.parentNode;
+        let name = element.querySelector('.charname').textContent;
+        let id = element.dataset.charId;
+        if (confirm('Are you sure to remove character "' + name + '"?')) {
+            app.callApi('DELETE', 'deleteCharacter', '&id=' + id, {}, {}, true)
+            .then(app.charactersPopup);
+        }
     }
 
     initSheet() {
@@ -197,6 +230,8 @@ class App {
         document.querySelector("[name='Strengthscore']").addEventListener('input', this.strengthskills);
         document.querySelector("[name='Wisdomscore']").addEventListener('input', this.wisdomskills);
         document.querySelector("[name='Intelligencescore']").addEventListener('input', this.intelligenceskills);
+
+        setInterval(app.save, 5000);
     }
 
     totalhd_clicked() {
@@ -252,10 +287,11 @@ class App {
 
     save() {
         document.querySelector('#statusMessage').textContent = 'Saving...';
-        this.callApi('POST', 'saveCharacter', '', this.getCharData(), {}, true)
+        app.callApi('POST', 'saveCharacter', '', app.getCharData(), {}, true)
         .then(data => {
             if (data.status == 'OK') {
                 document.querySelector('#statusMessage').textContent = 'Saved';
+                app.inputCharacterId(document.querySelector('form'), data.data.id)
             } else {
                 document.querySelector('#statusMessage').textContent = 'Error saving';
                 console.error(data.message);

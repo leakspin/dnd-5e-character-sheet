@@ -4,6 +4,7 @@ require_once 'db.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Headers: Content-Type, X-User-Session');
+header('Access-Control-Allow-Methods: GET, POST, DELETE, OPTIONS');
 header('Content-Type: application/json');
 
 function getSessionUser($db)
@@ -62,7 +63,13 @@ try {
             unset($input['characterId']);
         }
 
-        sendResponse(['status' => 'OK', 'message' => saveCharacter($db, $user['id'], $input, $characterId)]);
+        sendResponse(array_merge(['status' => 'OK'], saveCharacter($db, $user['id'], $input, $characterId)));
+    } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE' && isset($_REQUEST['method']) && $_REQUEST['method'] == 'deleteCharacter') {
+        $user = getSessionUser($db);
+        if (!isset($_REQUEST['id'])) {
+            throw new Exception('Character id required');
+        }
+        sendResponse(['status' => 'OK', 'data' => deleteCharacter($db, $user['id'], $_REQUEST['id'])]);
     } else {
         logMsg('INFO', 'Not a valid request received. HTTP Method ' . $_SERVER['REQUEST_METHOD'] . '. Method: ' . ($_GET['method'] ?? 'no method provided') . '.');
         sendResponse([]);

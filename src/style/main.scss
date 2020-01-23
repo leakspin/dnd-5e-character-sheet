@@ -850,10 +850,26 @@ form.charsheet {
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow-x: hidden;
+      overflow-y: auto;
 
       > div {
         margin: 5px 0;
-        min-width: 100px;
+
+        > div {
+          text-align: center;
+          margin: 0 3px;
+
+          &.charname {
+            min-width: 100px;
+          }
+
+          &.deletechar {
+            border: 1px solid red;
+            color: red;
+            width: 25px;
+          }
+        }
       }
     }
 

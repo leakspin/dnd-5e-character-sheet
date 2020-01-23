@@ -118,8 +118,12 @@ function saveCharacter($db, $userId, $data, $characterId = null)
         throw new Exception("Couldn't save character data");
     }
 
+    if (!$characterId) {
+        $characterId = $db->lastInsertId();
+    }
+
     logMsg('INFO', 'Character saved correctly for user ' . $userId);
-    return 'Character saved';
+    return ['message' => 'Character saved', 'data' => getCharacter($db, $userId, $characterId)];
 }
 
 function loadCharacter($db, $userId, $characterId)
@@ -129,6 +133,29 @@ function loadCharacter($db, $userId, $characterId)
     $stmt->bindValue(':characterId', $characterId);
     if ($stmt->execute()) {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    
+    logMsg('ERROR', 'Error getting character data: ' . implode(' | ', $stmt->errorInfo()));
+    throw new Exception("Couldn't get character data");
+}
+
+function deleteCharacter($db, $userId, $characterId)
+{
+    $stmt = $db->prepare('SELECT id FROM character WHERE user_id = :userId AND id = :characterId');
+    $stmt->bindValue(':userId', $userId);
+    $stmt->bindValue(':characterId', $characterId);
+    if ($stmt->execute()) {
+        $stmt = $db->prepare('DELETE FROM character WHERE user_id = :userId AND id = :characterId');
+        $stmt->bindValue(':userId', $userId);
+        $stmt->bindValue(':characterId', $characterId);
+
+        if (!$stmt->execute()) {
+            logMsg('ERROR', 'Error while deleting character: ' . implode(' | ', $stmt->errorInfo()));
+            throw new Exception("Error while deleting character");
+        } else {
+            logMsg('INFO', 'Character ' . $characterId . ' removed correctly.');
+            return 'Character removed successfully';
+        }
     }
     
     logMsg('ERROR', 'Error getting character data: ' . implode(' | ', $stmt->errorInfo()));
