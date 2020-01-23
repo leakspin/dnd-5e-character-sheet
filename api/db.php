@@ -38,10 +38,6 @@ function getUser($db, $userId)
 function getUserByName($db, $user)
 {
     $stmt = $db->prepare('SELECT * FROM user WHERE user = :user');
-    if (!$stmt) {
-        logMsg('ERROR', 'Error preparing query: ' . implode(' | ', $db->errorInfo()));
-        return "Error preparing query";
-    }
     $stmt->bindValue(':user', $user);
     if ($stmt->execute()) {
         return $stmt->fetch(PDO::FETCH_ASSOC);
@@ -77,11 +73,11 @@ function getCharacters($db, $userId)
     $stmt = $db->prepare('SELECT id, name FROM character WHERE user_id = :userId');
     $stmt->bindValue(':userId', $userId);
     if (!$stmt->execute()) {
-        logMsg('ERROR', 'Error getting characters: ' . implode(' | ', $stmt->errorInfo()));
+        logMsg('ERROR', 'Error getting characters for user ' . $userId . ': ' . implode(' | ', $stmt->errorInfo()));
         throw new Exception("Couldn't get characters.");
     }
 
-    logMsg('INFO', 'Characters retrieved correctly');
+    logMsg('INFO', 'Characters retrieved correctly for user ' . $userId);
 
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
@@ -92,11 +88,11 @@ function getCharacter($db, $userId, $characterId)
     $stmt->bindValue(':userId', $userId);
     $stmt->bindValue(':characterId', $characterId);
     if (!$stmt->execute()) {
-        logMsg('ERROR', 'Error getting character '.$characterId.': ' . implode(' | ', $stmt->errorInfo()));
+        logMsg('ERROR', 'Error getting character ' . $characterId . ': ' . implode(' | ', $stmt->errorInfo()));
         throw new Exception("Couldn't get character");
     }
 
-    logMsg('INFO', 'Character retrieved correctly');
+    logMsg('INFO', 'Character ' . $characterId . ' retrieved correctly for user ' . $userId);
 
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
@@ -114,7 +110,7 @@ function saveCharacter($db, $userId, $data, $characterId = null)
     $stmt->bindValue(':name', $data['charname']);
     $stmt->bindValue(':data', json_encode($data));
     if (!$stmt->execute()) {
-        logMsg('ERROR', 'Error saving character data: ' . implode(' | ', $stmt->errorInfo()));
+        logMsg('ERROR', 'Error saving character data for user ' . $userId . ': ' . implode(' | ', $stmt->errorInfo()));
         throw new Exception("Couldn't save character data");
     }
 
@@ -122,7 +118,7 @@ function saveCharacter($db, $userId, $data, $characterId = null)
         $characterId = $db->lastInsertId();
     }
 
-    logMsg('INFO', 'Character saved correctly for user ' . $userId);
+    logMsg('INFO', 'Character ' . $characterId . ' saved correctly for user ' . $userId);
     return ['message' => 'Character saved', 'data' => getCharacter($db, $userId, $characterId)];
 }
 
@@ -135,7 +131,7 @@ function loadCharacter($db, $userId, $characterId)
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    logMsg('ERROR', 'Error getting character data: ' . implode(' | ', $stmt->errorInfo()));
+    logMsg('ERROR', 'Error getting character ' . $characterId . ' for user ' . $userId . ' data: ' . implode(' | ', $stmt->errorInfo()));
     throw new Exception("Couldn't get character data");
 }
 
@@ -150,7 +146,7 @@ function deleteCharacter($db, $userId, $characterId)
         $stmt->bindValue(':characterId', $characterId);
 
         if (!$stmt->execute()) {
-            logMsg('ERROR', 'Error while deleting character: ' . implode(' | ', $stmt->errorInfo()));
+            logMsg('ERROR', 'Error while deleting character ' . $characterId . ' for user ' . $userId . ': ' . implode(' | ', $stmt->errorInfo()));
             throw new Exception("Error while deleting character");
         } else {
             logMsg('INFO', 'Character ' . $characterId . ' removed correctly.');
@@ -158,6 +154,6 @@ function deleteCharacter($db, $userId, $characterId)
         }
     }
     
-    logMsg('ERROR', 'Error getting character data: ' . implode(' | ', $stmt->errorInfo()));
+    logMsg('ERROR', 'Error getting character ' . $characterId . ' data for user ' . $userId . ': ' . implode(' | ', $stmt->errorInfo()));
     throw new Exception("Couldn't get character data");
 }
