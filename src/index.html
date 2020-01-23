@@ -58,7 +58,7 @@
 								<input name="proficiencybonus" placeholder="+2" />
 							</div>
 							<div class="label-container">
-								<label for="proficiencybonus">Proficiency&#10;Bonus</label>
+								<label for="proficiencybonus" class="bold">Proficiency&#10;Bonus</label>
 							</div>
 						</div>
 						<div class="inspiration box">
@@ -66,7 +66,7 @@
 								<input name="inspiration" type="checkbox" />
 							</div>
 							<div class="label-container">
-								<label for="inspiration">Inspiration</label>
+								<label for="inspiration" class="bold">Inspiration</label>
 							</div>
 						</div>
 						<div class="heropoints box">
@@ -74,14 +74,14 @@
 								<input name="heropoints" />
 							</div>
 							<div class="label-container">
-								<label for="heropoints">Hero Points</label>
+								<label for="heropoints" class="bold">Hero Points</label>
 							</div>
 						</div>
 					</section>
 					<section class="armorclass">
 						<div class="main">
 							<div class="box">
-								<div class="label-container"><label for="ac" class="breakword">Armor Class</label></div>
+								<div class="label-container"><label for="ac" class="breakword bold">Armor Class</label></div>
 								<div class="holder"><input name="ac" class="blue" placeholder="10" type="text" /></div>
 							</div>
 						</div>
@@ -107,7 +107,7 @@
 					<section class="initiative">
 						<div class="main">
 							<div class="box">
-								<div class="label-container"><label for="initiative">Initiative</label></div>
+								<div class="label-container"><label for="initiative" class="bold">Initiative</label></div>
 								<div class="holder"><input name="initiative" class="blue" placeholder="+0" type="text" /></div>
 							</div>
 						</div>
@@ -125,7 +125,7 @@
 					<section class="speed">
 						<div class="main">
 							<div class="box">
-								<div class="label-container"><label for="speed">Speed</label></div>
+								<div class="label-container"><label for="speed" class="bold">Speed</label></div>
 								<div class="holder"><input name="speed" class="blue" placeholder="30" type="text" /></div>
 							</div>
 						</div>
@@ -141,7 +141,7 @@
 						</div>
 					</section>
 					<section class="hitpoints">
-						<label class="title" for="maxhp">Hit Points</label>
+						<label class="title bold" for="maxhp">Hit Points</label>
 						<div class="main">
 							<div class="total">
 								<input name="maxhp" placeholder="10" type="text" />
@@ -158,7 +158,7 @@
 						</div>
 					</section>
 					<section class="deathsave">
-						<div>DEATH SAVES</div>
+						<div class="bold">DEATH SAVES</div>
 						<div>
 							<div>
 								<input type="checkbox" name="save1" class="green" />
@@ -380,19 +380,19 @@
 						</section>
 						<section class="additional-abilities">
 							<div class="passive-perception">
-								<label for="passiveperception">Passive Perception</label>
+								<label for="passiveperception" class="bold">Passive Perception</label>
 								<input name="passiveperception" class="wisdom" placeholder="10" />
 							</div>
 							<div class="passive-investigation">
-								<label for="passiveinvestigation">Passive Investigation</label>
+								<label for="passiveinvestigation" class="bold">Passive Investigation</label>
 								<input name="passiveinvestigation" class="intelligence" placeholder="10" />
 							</div>
 							<div class="languages blue">
-								<label for="languages">Languages</label>
+								<label for="languages" class="bold">Languages</label>
 								<textarea name="languages"></textarea>
 							</div>
 							<div class="tools blue">
-								<label for="tools">Tools</label>
+								<label for="tools" class="bold">Tools</label>
 								<textarea name="tools"></textarea>
 							</div>
 						</section>
@@ -403,14 +403,38 @@
 						</section>
 						<section class="class-resources">
 							<div class="title">CLASS RESOURCES</div>
-							<input type="text" name="classresource1" />
-							<input type="text" name="classresource2" />
-							<input type="text" name="classresource3" />
-							<input type="text" name="classresource4" />
-							<input type="text" name="classresource5" />
-							<input type="text" name="classresource6" />
-							<input type="text" name="classresource7" />
-							<input type="text" name="classresource8" />
+							<div>
+								<input type="text" name="classresource1" />
+								<div class="edit" data-name="classresource1">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource2" />
+								<div class="edit" data-name="classresource2">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource3" />
+								<div class="edit" data-name="classresource3">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource4" />
+								<div class="edit" data-name="classresource4">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource5" />
+								<div class="edit" data-name="classresource5">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource6" />
+								<div class="edit" data-name="classresource6">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource7" />
+								<div class="edit" data-name="classresource7">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classresource8" />
+								<div class="edit" data-name="classresource8">👁️</div>
+							</div>
 						</section>
 						<section class="weapons">
 							<div class="title">WEAPONS</div>
@@ -491,47 +515,161 @@
 						</section>
 						<section class="class-abilities">
 							<div class="title">CLASS ABILITIES</div>
-							<input type="text" name="classabilities1" />
-							<input type="text" name="classabilities2" />
-							<input type="text" name="classabilities3" />
-							<input type="text" name="classabilities4" />
-							<input type="text" name="classabilities5" />
-							<input type="text" name="classabilities6" />
-							<input type="text" name="classabilities7" />
-							<input type="text" name="classabilities8" />
-							<input type="text" name="classabilities9" />
-							<input type="text" name="classabilities10" />
-							<input type="text" name="classabilities11" />
-							<input type="text" name="classabilities12" />
-							<input type="text" name="classabilities13" />
-							<input type="text" name="classabilities14" />
-							<input type="text" name="classabilities15" />
-							<input type="text" name="classabilities16" />
-							<input type="text" name="classabilities17" />
-							<input type="text" name="classabilities18" />
-							<input type="text" name="classabilities19" />
+							<div>
+								<input type="text" name="classabilities1" />
+								<div class="edit" data-name="classabilities1">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities2" />
+								<div class="edit" data-name="classabilities2">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities3" />
+								<div class="edit" data-name="classabilities3">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities4" />
+								<div class="edit" data-name="classabilities4">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities5" />
+								<div class="edit" data-name="classabilities5">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities6" />
+								<div class="edit" data-name="classabilities6">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities7" />
+								<div class="edit" data-name="classabilities7">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities8" />
+								<div class="edit" data-name="classabilities8">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities9" />
+								<div class="edit" data-name="classabilities9">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities10" />
+								<div class="edit" data-name="classabilities10">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities11" />
+								<div class="edit" data-name="classabilities11">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities12" />
+								<div class="edit" data-name="classabilities12">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities13" />
+								<div class="edit" data-name="classabilities13">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities14" />
+								<div class="edit" data-name="classabilities14">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities15" />
+								<div class="edit" data-name="classabilities15">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities16" />
+								<div class="edit" data-name="classabilities16">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities17" />
+								<div class="edit" data-name="classabilities17">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities18" />
+								<div class="edit" data-name="classabilities18">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="classabilities19" />
+								<div class="edit" data-name="classabilities19">👁️</div>
+							</div>
 						</section>
 						<section class="race-abilities">
 							<div class="title">RACE ABILITIES</div>
-							<input type="text" name="raceabilities1" />
-							<input type="text" name="raceabilities2" />
-							<input type="text" name="raceabilities3" />
-							<input type="text" name="raceabilities4" />
-							<input type="text" name="raceabilities5" />
-							<input type="text" name="raceabilities6" />
-							<input type="text" name="raceabilities7" />
-							<input type="text" name="raceabilities8" />
-							<input type="text" name="raceabilities9" />
-							<input type="text" name="raceabilities10" />
-							<input type="text" name="raceabilities11" />
-							<input type="text" name="raceabilities12" />
-							<input type="text" name="raceabilities13" />
-							<input type="text" name="raceabilities14" />
-							<input type="text" name="raceabilities15" />
-							<input type="text" name="raceabilities16" />
-							<input type="text" name="raceabilities17" />
-							<input type="text" name="raceabilities18" />
-							<input type="text" name="raceabilities19" />
+							<div>
+								<input type="text" name="raceabilities1" />
+								<div class="edit" data-name="raceabilities1">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities2" />
+								<div class="edit" data-name="raceabilities2">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities3" />
+								<div class="edit" data-name="raceabilities3">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities4" />
+								<div class="edit" data-name="raceabilities4">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities5" />
+								<div class="edit" data-name="raceabilities5">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities6" />
+								<div class="edit" data-name="raceabilities6">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities7" />
+								<div class="edit" data-name="raceabilities7">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities8" />
+								<div class="edit" data-name="raceabilities8">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities9" />
+								<div class="edit" data-name="raceabilities9">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities10" />
+								<div class="edit" data-name="raceabilities10">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities11" />
+								<div class="edit" data-name="raceabilities11">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities12" />
+								<div class="edit" data-name="raceabilities12">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities13" />
+								<div class="edit" data-name="raceabilities13">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities14" />
+								<div class="edit" data-name="raceabilities14">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities15" />
+								<div class="edit" data-name="raceabilities15">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities16" />
+								<div class="edit" data-name="raceabilities16">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities17" />
+								<div class="edit" data-name="raceabilities17">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities18" />
+								<div class="edit" data-name="raceabilities18">👁️</div>
+							</div>
+							<div>
+								<input type="text" name="raceabilities19" />
+								<div class="edit" data-name="raceabilities19">👁️</div>
+							</div>
 						</section>
 					</section>
 				</section>
@@ -572,6 +710,12 @@
 			<div class="title">JSON Import</div>
 			<textarea id="json-import"></textarea>
 			<div class="center"><div class="button" onclick="window.app.import()">Import</div></div>
+		</template>
+		<template id="template-see-field">
+			<div id="popup-close" onclick="app.closePopup()">X</div>
+			<div class="title"></div>
+			<textarea id="field"></textarea>
+			<div class="center"><div class="button" onclick="window.app.editField()">Edit</div></div>
 		</template>
 	</body>
 </html>

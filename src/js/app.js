@@ -149,6 +149,16 @@ class App {
         });
     }
 
+    deleteCharacter() {
+        let element = event.target.parentNode;
+        let name = element.querySelector('.charname').textContent;
+        let id = element.dataset.charId;
+        if (confirm('Are you sure to remove character "' + name + '"?')) {
+            app.callApi('DELETE', 'deleteCharacter', '&id=' + id, {}, {}, true)
+            .then(app.charactersPopup);
+        }
+    }
+
     inputCharacterId(body, id) {
         let elem = body.querySelector('input[name="characterId"]');
         if (elem) {
@@ -159,16 +169,6 @@ class App {
             charId.type = 'hidden';
             charId.value = id;
             body.appendChild(charId);
-        }
-    }
-
-    deleteCharacter() {
-        let element = event.target.parentNode;
-        let name = element.querySelector('.charname').textContent;
-        let id = element.dataset.charId;
-        if (confirm('Are you sure to remove character "' + name + '"?')) {
-            app.callApi('DELETE', 'deleteCharacter', '&id=' + id, {}, {}, true)
-            .then(app.charactersPopup);
         }
     }
 
@@ -230,6 +230,9 @@ class App {
         document.querySelector("[name='Strengthscore']").addEventListener('input', this.strengthskills);
         document.querySelector("[name='Wisdomscore']").addEventListener('input', this.wisdomskills);
         document.querySelector("[name='Intelligencescore']").addEventListener('input', this.intelligenceskills);
+        document.querySelectorAll('.class-resources .edit').forEach(elem => {
+            elem.addEventListener('click', app.showDetail);
+        });
 
         setInterval(app.save, 5000);
     }
@@ -262,6 +265,23 @@ class App {
             }
         });
         return data;
+    }
+
+    showDetail(event) {
+        let element = event.target;
+        let name = element.dataset.name;
+        let template = document.querySelector('template#template-see-field').content.cloneNode(true);
+        template.querySelector('#field').value = document.querySelector('input[name="' + name + '"]').value;
+        template.querySelector('#field').dataset.name = name;
+        document.querySelector('#popup-box').innerHTML = '';
+        document.querySelector('#popup-box').append(template);
+        app.openPopup();
+    }
+
+    editField() {
+        let field = document.querySelector('#popup-box #field');
+        document.querySelector('input[name="' + field.dataset.name + '"]').value = field.value;
+        this.closePopup();
     }
 
     export() {
