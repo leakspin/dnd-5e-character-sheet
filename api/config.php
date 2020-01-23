@@ -8,6 +8,7 @@ const DB_FILE = __DIR__ . '/db.db';
 const LOG_FILE = __DIR__ . '/dnd.log';
 const SECRET = 'Esto es una ficha de DnD';
 const ALG_ENCRYPT = 'AES-256-CBC';
+const LOG_LEVEL = ['ERROR'];
 
 set_error_handler(function ($code, $message, $file, $line) {
     logMsg('ERROR', $message . '|' . $file . ':' . $line);
@@ -19,7 +20,9 @@ set_exception_handler(function ($exception) {
 
 function logMsg($status, $msg)
 {
-    file_put_contents(LOG_FILE, '[' . date('Y-m-d H:i:s') . '] [' . $status . '] - ' . $msg . PHP_EOL, FILE_APPEND);
+    if (in_array($status, LOG_LEVEL)) {
+        file_put_contents(LOG_FILE, '[' . date('Y-m-d H:i:s') . '] [' . $status . '] - ' . $msg . PHP_EOL, FILE_APPEND);
+    }
 }
 
 function sendResponse($data)
