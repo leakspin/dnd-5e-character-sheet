@@ -240,7 +240,7 @@ class App {
             }
         });
 
-        // setInterval(app.save, 5000);
+        setInterval(app.save, 5000);
     }
 
     totalhd_clicked() {
