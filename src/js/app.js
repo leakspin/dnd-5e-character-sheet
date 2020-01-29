@@ -233,8 +233,14 @@ class App {
         document.querySelectorAll('.class-resources .edit').forEach(elem => {
             elem.addEventListener('click', app.showDetail);
         });
+        
+        document.querySelector('form.charsheet').addEventListener('click', () => {
+            if (!document.querySelector('#menu-content').classList.contains('hide')) {
+                app.closeMenu();
+            }
+        });
 
-        setInterval(app.save, 5000);
+        // setInterval(app.save, 5000);
     }
 
     totalhd_clicked() {
@@ -327,6 +333,21 @@ class App {
                 element.value = data.hasOwnProperty(element.name) ? data[element.name] : '';
             }
         });
+    }
+
+    openMenu() {
+        document.querySelector('#menu-icon').classList.add('hide');
+        document.querySelector('#menu-content').classList.remove('hide');
+    }
+
+    closeMenu() {
+        document.querySelector('#menu-icon').classList.remove('hide');
+        document.querySelector('#menu-content').classList.add('hide');
+    }
+
+    goTo(selector) {
+        document.querySelector(selector).scrollIntoView({behavior: "smooth", block: "start"});
+        app.closeMenu();
     }
 
     logout() {
