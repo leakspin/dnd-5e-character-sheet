@@ -230,7 +230,7 @@ class App {
         document.querySelector("[name='Strengthscore']").addEventListener('input', this.strengthskills);
         document.querySelector("[name='Wisdomscore']").addEventListener('input', this.wisdomskills);
         document.querySelector("[name='Intelligencescore']").addEventListener('input', this.intelligenceskills);
-        document.querySelectorAll('.class-resources .edit').forEach(elem => {
+        document.querySelectorAll('.edit').forEach(elem => {
             elem.addEventListener('click', app.showDetail);
         });
         
@@ -240,7 +240,7 @@ class App {
             }
         });
 
-        setInterval(app.save, 5000);
+        // setInterval(app.save, 5000);
     }
 
     totalhd_clicked() {
@@ -346,7 +346,7 @@ class App {
     }
 
     goTo(selector) {
-        document.querySelector(selector).scrollIntoView({behavior: "smooth", block: "start"});
+        document.querySelector(selector).scrollIntoView({behavior: "auto", block: "start"});
         app.closeMenu();
     }
 
