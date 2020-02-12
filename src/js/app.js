@@ -277,9 +277,6 @@ class App {
             });
         }
         
-        
-        
-        
         document.querySelector('form.charsheet').addEventListener('click', () => {
             if (!document.querySelector('#menu-content').classList.contains('hide')) {
                 app.closeMenu();
@@ -299,6 +296,7 @@ class App {
 
         app.prevData = app.getCharData();
         app.preventSaving = false;
+        app.isSaving = false;
 
         setInterval(app.save, 5000);
     }
@@ -376,38 +374,44 @@ class App {
     }
 
     save(force = false, preventSaving = false) {
-        if (navigator.onLine) {
-            if (!app.preventSaving || preventSaving) {
-                document.querySelector('#statusMessage').textContent = 'Saving...';
-                let data = app.getCharData();
-                if (force) {
-                    data.force = true;
-                }
-                app.callApi('POST', 'saveCharacter', '', data, {}, true)
-                .then(data => {
-                    if (data.status == 'OK') {
-                        document.querySelector('#statusMessage').textContent = 'Saved';
-                        app.inputCharacterId(document.querySelector('form'), data.data.id, data.data.datetime);
-                        app.prevData = app.getCharData();
-                    } else {
-                        document.querySelector('#statusMessage').textContent = 'Error saving';
-                        if (data.message == 'Character already saved with a future date, must overwrite.') {
-                            if (confirm("There's new data saved in the database, different from here. Would you like to overwrite it?")) {
-                                app.save(true, true);
-                                app.preventSaving = false;
-                            } else {
-                                app.preventSaving = true;
-                                document.querySelector('#statusMessage').textContent = 'Not saving automatically';
-                            }
-                        }
-                        console.error(data.message);
+        if (!app.isSaving) {
+            app.isSaving = true;
+            if (navigator.onLine) {
+                if (!app.preventSaving || preventSaving) {
+                    document.querySelector('#statusMessage').textContent = 'Saving...';
+                    let data = app.getCharData();
+                    if (force) {
+                        data.force = true;
                     }
-                });
+                    app.callApi('POST', 'saveCharacter', '', data, {}, true)
+                    .then(data => {
+                        if (data.status == 'OK') {
+                            document.querySelector('#statusMessage').textContent = 'Saved';
+                            app.inputCharacterId(document.querySelector('form'), data.data.id, data.data.datetime);
+                            app.prevData = app.getCharData();
+                        } else {
+                            document.querySelector('#statusMessage').textContent = 'Error saving';
+                            if (data.message == 'Character already saved with a future date, must overwrite.') {
+                                if (confirm("There's new data saved in the database, different from here. Would you like to overwrite it?")) {
+                                    app.isSaving = false;
+                                    app.save(true, true);
+                                    app.preventSaving = false;
+                                } else {
+                                    app.preventSaving = true;
+                                    document.querySelector('#statusMessage').textContent = 'Not saving automatically';
+                                }
+                            }
+                            console.error(data.message);
+                        }
+
+                        app.isSaving = false;
+                    });
+                } else {
+                    document.querySelector('#statusMessage').textContent = 'Not saving automatically';
+                }
             } else {
-                document.querySelector('#statusMessage').textContent = 'Not saving automatically';
+                document.querySelector('#statusMessage').textContent = 'Offline, not saving';
             }
-        } else {
-            document.querySelector('#statusMessage').textContent = 'Offline, not saving';
         }
     }
 
@@ -418,7 +422,7 @@ class App {
                     if (data.hasOwnProperty(element.name) && data[element.name] == 2) {
                         element.value = data[element.name];
                     }
-                    
+
                     element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
                 } else {
                     element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
