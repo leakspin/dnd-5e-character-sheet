@@ -1,0 +1,13 @@
+{
+  "name": "DnD 5th Character Sheet",
+  "short_name": "dnd-5-char",
+  "icons": [{
+      "src": "/static/img/icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }],
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f0ede6",
+  "theme_color": "#f0ede6"
+}

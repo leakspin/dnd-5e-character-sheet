@@ -4,6 +4,7 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
+
 const generateHTMLPlugins = () => glob.sync('./src/**/*.html').map(
   dir => new HTMLWebpackPlugin({
     filename: path.basename(dir), // Output
@@ -37,6 +38,14 @@ module.exports = {
       {
         from: './src/static/',
         to: './static/',
+      },
+      {
+        from: './src/manifest.json',
+        to: './',
+      },
+      {
+        from: './src/js/service-worker.js',
+        to: './',
       },
     ]),
     ...generateHTMLPlugins(),

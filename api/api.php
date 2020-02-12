@@ -57,13 +57,25 @@ try {
         $user = getSessionUser($db);
         $input = json_decode(file_get_contents('php://input'), true);
         $characterId = null;
+        $lastSavedDate = null;
+        $force = false;
 
         if (isset($input['characterId'])) {
             $characterId = $input['characterId'];
             unset($input['characterId']);
         }
 
-        sendResponse(array_merge(['status' => 'OK'], saveCharacter($db, $user['id'], $input, $characterId)));
+        if (isset($input['lastSavedDate'])) {
+            $lastSavedDate = $input['lastSavedDate'];
+            unset($input['lastSavedDate']);
+        }
+
+        if (isset($input['force'])) {
+            $force = $input['force'];
+            unset($input['force']);
+        }
+
+        sendResponse(array_merge(['status' => 'OK'], saveCharacter($db, $user['id'], $input, $characterId, $lastSavedDate, $force)));
     } elseif ($_SERVER['REQUEST_METHOD'] == 'DELETE' && isset($_REQUEST['method']) && $_REQUEST['method'] == 'deleteCharacter') {
         $user = getSessionUser($db);
         if (!isset($_REQUEST['id'])) {

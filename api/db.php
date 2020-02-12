@@ -97,18 +97,25 @@ function getCharacter($db, $userId, $characterId)
     return $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
-function saveCharacter($db, $userId, $data, $characterId = null)
+function saveCharacter($db, $userId, $data, $characterId = null, $lastSavedDate = null, $force = false)
 {
     if ($characterId) {
-        $stmt = $db->prepare('UPDATE character SET data = :data, name = :name WHERE id = :characterId and user_id = :userId');
+        $char = getCharacter($db, $userId, $characterId);
+        if (!$force && strtotime($char['datetime']) > strtotime($lastSavedDate)) {
+            logMsg('INFO', 'Character ' . $characterId . ' already saved with a future date.');
+            throw new Exception("Character already saved with a future date, must overwrite.");
+        }
+
+        $stmt = $db->prepare('UPDATE character SET data = :data, name = :name, datetime = :datetime WHERE id = :characterId and user_id = :userId');
         $stmt->bindValue(':characterId', $characterId);
     } else {
-        $stmt = $db->prepare('INSERT INTO character (user_id, name, data) VALUES (:userId, :name, :data)');
+        $stmt = $db->prepare('INSERT INTO character (user_id, name, data, datetime) VALUES (:userId, :name, :data, :datetime)');
     }
 
     $stmt->bindValue(':userId', $userId);
     $stmt->bindValue(':name', $data['charname']);
     $stmt->bindValue(':data', json_encode($data));
+    $stmt->bindValue(':datetime', date('Y-m-d H:i:s'));
     if (!$stmt->execute()) {
         logMsg('ERROR', 'Error saving character data for user ' . $userId . ': ' . implode(' | ', $stmt->errorInfo()));
         throw new Exception("Couldn't save character data");
