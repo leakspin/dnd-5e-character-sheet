@@ -4,8 +4,16 @@
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<meta name="description" content="A simple DnD 5th Character sheet">
+		<meta name="theme-color" content="#f0ede6" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<meta name="apple-mobile-web-app-title" content="DnD 5th Charsheet PWA">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<link rel="apple-touch-icon" href="/static/img/icon.png">
+		<link rel="shortcut icon" href="/static/img/icon.png">
 		<title>DnD 5e</title>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
+		<link rel="manifest" href="/manifest.json">
 	</head>
 	<body>
 		<form class="charsheet">
@@ -45,7 +53,7 @@
 						<div id="logout" class="button" onclick="app.logout()">Logout</div>
 					</div>
 					<div>
-						<div id="save" class="button" onclick="app.save()">Save</div>
+						<div id="save" class="button" onclick="app.save(false, true)">Save</div>
 						<div id="statusMessage"></div>
 					</div>
 				</section>
