@@ -1010,8 +1010,15 @@ form.charsheet {
                   }
                 }
 
-                .spell-difficulty {
+                &.spell-diff-atk {
+                  flex-direction: row;
+                  justify-content: center;
+                  align-items: center;
+                }
+
+                .spell-difficulty, .spell-attack-bonus {
                   text-align: center;
+                  margin: 0 10px;
 
                   input {
                     margin-top: 5px;
@@ -1020,6 +1027,10 @@ form.charsheet {
                     font-size: 26px;
                     border: 4px solid red;
                     border-radius: 32px;
+                  }
+
+                  &.spell-attack-bonus input {
+                    border-color: black;
                   }
                 }
               }
