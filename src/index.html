@@ -45,16 +45,18 @@
 				</section>
 				<section class="options">
 					<div>
-						<div class="button" onclick="app.export()">Export</div>
-						<div class="button" onclick="app.importPopup()">Import</div>
-					</div>
-					<div>
-						<div id="user"></div>
-						<div id="logout" class="button" onclick="app.logout()">Logout</div>
-					</div>
-					<div>
-						<div id="save" class="button" onclick="app.save(false, true)">Save</div>
-						<div id="reload" class="button" onclick="window.location.reload()">Reload</div>
+						<div>
+							<div class="button" onclick="app.export()">Export</div>
+							<div class="button" onclick="app.importPopup()">Import</div>
+						</div>
+						<div>
+							<div id="user"></div>
+							<div id="logout" class="button" onclick="app.logout()">Logout</div>
+						</div>
+						<div>
+							<div id="save" class="button" onclick="app.save(false, true)">Save</div>
+							<div id="reload" class="button" onclick="window.location.reload()">Reload</div>
+						</div>
 					</div>
 					<div id="statusMessage"></div>
 				</section>
@@ -210,10 +212,10 @@
 								</div>
 								<div class="skills">
 									<div class="row">
-										<input name="Strength-save-prof" type="checkbox" /><input name="Strength-save" placeholder="+0" type="text" /><label for="Strength-save">SAVE</label>
+										<input name="Strength-save-prof" class="expertise" type="checkbox" /><input name="Strength-save" placeholder="+0" type="text" /><label for="Strength-save">SAVE</label>
 									</div>
 									<div class="row">
-										<input name="Athletics-prof" type="checkbox" /><input name="Athletics" placeholder="+0" type="text" /><label for="Athletics">Athletics</label>
+										<input name="Athletics-prof" class="expertise" type="checkbox" /><input name="Athletics" placeholder="+0" type="text" /><label for="Athletics">Athletics</label>
 									</div>
 									<div class="row">
 										<input name="Carryingcapacity" placeholder="0" type="text" class="noprofficency" /><label for="Carryingcapacity">Carrying Capacity</label>
@@ -245,16 +247,16 @@
 								</div>
 								<div class="skills">
 									<div class="row">
-										<input name="Dexterity-save-prof" type="checkbox" /><input name="Dexterity-save" placeholder="0" type="text" /><label for="Dexterity-save">SAVE</label>
+										<input name="Dexterity-save-prof" class="expertise" type="checkbox" /><input name="Dexterity-save" placeholder="0" type="text" /><label for="Dexterity-save">SAVE</label>
 									</div>
 									<div class="row">
-										<input name="Acrobatics-prof" type="checkbox" /><input name="Acrobatics" placeholder="0" type="text" /><label for="Acrobatics">Acrobatics</label>
+										<input name="Acrobatics-prof" class="expertise" type="checkbox" /><input name="Acrobatics" placeholder="0" type="text" /><label for="Acrobatics">Acrobatics</label>
 									</div>
 									<div class="row">
-										<input name="Sleight of Hand-prof" type="checkbox" /><input name="Sleight of Hand" placeholder="0" type="text" /><label for="Sleight of Hand">Sleight of Hand</label>
+										<input name="Sleight of Hand-prof" class="expertise" type="checkbox" /><input name="Sleight of Hand" placeholder="0" type="text" /><label for="Sleight of Hand">Sleight of Hand</label>
 									</div>
 									<div class="row">
-										<input name="Stealth-prof" type="checkbox" /><input name="Stealth" placeholder="0" type="text" /><label for="Stealth">Stealth</label>
+										<input name="Stealth-prof" class="expertise" type="checkbox" /><input name="Stealth" placeholder="0" type="text" /><label for="Stealth">Stealth</label>
 									</div>
 								</div>
 							</div>
@@ -274,13 +276,13 @@
 								</div>
 								<div class="skills">
 									<div class="row">
-										<input name="Constitution-save-prof" type="checkbox" /><input name="Constitution-save" placeholder="0" type="text" /><label for="Constitution-save">SAVE</label>
+										<input name="Constitution-save-prof" class="expertise" type="checkbox" /><input name="Constitution-save" placeholder="0" type="text" /><label for="Constitution-save">SAVE</label>
 									</div>
 									<div class="row">
-										<input name="Concentration-prof" type="checkbox" /><input name="Concentration" placeholder="0" type="text" /><label for="Concentration">Concentration</label>
+										<input name="Concentration-prof" class="expertise" type="checkbox" /><input name="Concentration" placeholder="0" type="text" /><label for="Concentration">Concentration</label>
 									</div>
 									<div class="row">
-										<input name="ConOther" placeholder="0" type="text" class="noprofficency" /><label for="ConOther">Other</label>
+										<input name="ConOther" class="expertise" placeholder="0" type="text" class="noprofficency" /><label for="ConOther">Other</label>
 									</div>
 								</div>
 							</div>
@@ -300,22 +302,22 @@
 								</div>
 								<div class="skills">
 									<div class="row">
-										<input name="Intelligence-save-prof" type="checkbox" /><input name="Intelligence-save" placeholder="0" type="text" /><label for="Intelligence-save">SAVE</label>
+										<input name="Intelligence-save-prof" class="expertise" type="checkbox" /><input name="Intelligence-save" placeholder="0" type="text" /><label for="Intelligence-save">SAVE</label>
 									</div>
 									<div class="row">
-										<input name="Arcana-prof" type="checkbox" /><input name="Arcana" placeholder="0" type="text" /><label for="Arcana">Arcana</label>
+										<input name="Arcana-prof" class="expertise" class="expertise" type="checkbox" /><input name="Arcana" placeholder="0" type="text" /><label for="Arcana">Arcana</label>
 									</div>
 									<div class="row">
-										<input name="History-prof" type="checkbox" /><input name="History" placeholder="0" type="text" /><label for="History">History</label>
+										<input name="History-prof" class="expertise" type="checkbox" /><input name="History" placeholder="0" type="text" /><label for="History">History</label>
 									</div>
 									<div class="row">
-										<input name="Investigation-prof" type="checkbox" /><input name="Investigation" placeholder="0" type="text" /><label for="Investigation">Investigation</label>
+										<input name="Investigation-prof" class="expertise" type="checkbox" /><input name="Investigation" placeholder="0" type="text" /><label for="Investigation">Investigation</label>
 									</div>
 									<div class="row">
-										<input name="Nature-prof" type="checkbox" /><input name="Nature" placeholder="0" type="text" /><label for="Nature">Nature</label>
+										<input name="Nature-prof" class="expertise" type="checkbox" /><input name="Nature" placeholder="0" type="text" /><label for="Nature">Nature</label>
 									</div>
 									<div class="row">
-										<input name="Religion-prof" type="checkbox" /><input name="Religion" placeholder="0" type="text" /><label for="Religion">Religion</label>
+										<input name="Religion-prof" class="expertise" type="checkbox" /><input name="Religion" placeholder="0" type="text" /><label for="Religion">Religion</label>
 									</div>
 								</div>
 							</div>
@@ -335,22 +337,22 @@
 								</div>
 								<div class="skills">
 									<div class="row">
-										<input name="Wisdom-save-prof" type="checkbox" /><input name="Wisdom-save" placeholder="0" type="text" /><label for="Wisdom-save">SAVE</label>
+										<input name="Wisdom-save-prof" class="expertise" type="checkbox" /><input name="Wisdom-save" placeholder="0" type="text" /><label for="Wisdom-save">SAVE</label>
 									</div>
 									<div class="row">
-										<input name="Animal Handling-prof" type="checkbox" /><input name="Animal Handling" placeholder="0" type="text" /><label for="Animal Handling">Animal Handling</label>
+										<input name="Animal Handling-prof" class="expertise" type="checkbox" /><input name="Animal Handling" placeholder="0" type="text" /><label for="Animal Handling">Animal Handling</label>
 									</div>
 									<div class="row">
-										<input name="Insight-prof" type="checkbox" /><input name="Insight" placeholder="0" type="text" /><label for="Insight">Insight</label>
+										<input name="Insight-prof" class="expertise" type="checkbox" /><input name="Insight" placeholder="0" type="text" /><label for="Insight">Insight</label>
 									</div>
 									<div class="row">
-										<input name="Medicine-prof" type="checkbox" /><input name="Medicine" placeholder="0" type="text" /><label for="Medicine">Medicine</label>
+										<input name="Medicine-prof" class="expertise" type="checkbox" /><input name="Medicine" placeholder="0" type="text" /><label for="Medicine">Medicine</label>
 									</div>
 									<div class="row">
-										<input name="Perception-prof" type="checkbox" /><input name="Perception" placeholder="0" type="text" /><label for="Perception">Perception</label>
+										<input name="Perception-prof" class="expertise" type="checkbox" /><input name="Perception" placeholder="0" type="text" /><label for="Perception">Perception</label>
 									</div>
 									<div class="row">
-										<input name="Survival-prof" type="checkbox" /><input name="Survival" placeholder="0" type="text" /><label for="Survival">Survival</label>
+										<input name="Survival-prof" class="expertise" type="checkbox" /><input name="Survival" placeholder="0" type="text" /><label for="Survival">Survival</label>
 									</div>
 								</div>
 							</div>
@@ -370,19 +372,19 @@
 								</div>
 								<div class="skills">
 									<div class="row">
-										<input name="Charisma-save-prof" type="checkbox" /><input name="Charisma-save" placeholder="0" type="text" /><label for="Charisma-save">SAVE</label>
+										<input name="Charisma-save-prof" class="expertise" type="checkbox" /><input name="Charisma-save" placeholder="0" type="text" /><label for="Charisma-save">SAVE</label>
 									</div>
 									<div class="row">
-										<input name="Deception-prof" type="checkbox" /><input name="Deception" placeholder="0" type="text" /><label for="Deception">Deception</label>
+										<input name="Deception-prof" class="expertise" type="checkbox" /><input name="Deception" placeholder="0" type="text" /><label for="Deception">Deception</label>
 									</div>
 									<div class="row">
-										<input name="Intimidation-prof" type="checkbox" /><input name="Intimidation" placeholder="0" type="text" /><label for="Intimidation">Intimidation</label>
+										<input name="Intimidation-prof" class="expertise" type="checkbox" /><input name="Intimidation" placeholder="0" type="text" /><label for="Intimidation">Intimidation</label>
 									</div>
 									<div class="row">
-										<input name="Performance-prof" type="checkbox" /><input name="Performance" placeholder="0" type="text" /><label for="Performance">Performance</label>
+										<input name="Performance-prof" class="expertise" type="checkbox" /><input name="Performance" placeholder="0" type="text" /><label for="Performance">Performance</label>
 									</div>
 									<div class="row">
-										<input name="Persuasion-prof" type="checkbox" /><input name="Persuasion" placeholder="0" type="text" /><label for="Persuasion">Persuasion</label>
+										<input name="Persuasion-prof" class="expertise" type="checkbox" /><input name="Persuasion" placeholder="0" type="text" /><label for="Persuasion">Persuasion</label>
 									</div>
 								</div>
 							</div>

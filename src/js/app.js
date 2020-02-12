@@ -262,6 +262,23 @@ class App {
         document.querySelectorAll('.edit').forEach(elem => {
             elem.addEventListener('click', app.showDetail);
         });
+
+        let expertises = document.getElementsByClassName('expertise');
+
+        for (let index = 0; index < expertises.length; index++) {
+            const elem = expertises[index];
+            elem.addEventListener('click', (e) => {
+                if (!e.target.checked && e.target.value != 2) {
+                    e.preventDefault();
+                    e.target.value = 2;
+                } else if (e.target.checked && e.target.value == 2) {
+                    e.target.value = undefined;
+                }
+            });
+        }
+        
+        
+        
         
         document.querySelector('form.charsheet').addEventListener('click', () => {
             if (!document.querySelector('#menu-content').classList.contains('hide')) {
@@ -308,7 +325,11 @@ class App {
         let data = {};
         document.querySelectorAll('input, textarea').forEach(element => {
             if (element.type == 'checkbox') {
-                data[element.name] = element.checked;
+                if (element.classList.contains('expertise')) {
+                    data[element.name] = element.value == 2 ? element.value : element.checked;
+                } else {
+                    data[element.name] = element.checked;
+                }
             } else {
                 data[element.name] = element.value;
             }
@@ -393,7 +414,15 @@ class App {
     loadData(data) {
         document.querySelectorAll('input, textarea').forEach(element => {
             if (element.type == 'checkbox') {
-                element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+                if (element.classList.contains('expertise')) {
+                    if (data.hasOwnProperty(element.name) && data[element.name] == 2) {
+                        element.value = data[element.name];
+                    }
+                    
+                    element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+                } else {
+                    element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+                }
             } else {
                 element.value = data.hasOwnProperty(element.name) ? data[element.name] : '';
             }
