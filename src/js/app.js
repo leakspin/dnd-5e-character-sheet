@@ -16,6 +16,24 @@ class App {
         } else {
             this.loginPopup();
         }
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+              navigator.serviceWorker.register('/service-worker.js')
+                  .then((reg) => {
+                    console.log('Service worker registered.', reg);
+                  });
+            });
+        }
+    }
+
+    goOffline() {
+        alert('You are offline. If you reconnect without closing this window, the sheet will be automatically saved.');
+        document.querySelector('#statusMessage').textContent = 'Offline, not saving';
+    }
+
+    goOnline() {
+        this.save();
     }
 
     callApi(method, apiMethod, extraUrl = '', data = {}, headers = {}, useToken = false) {
@@ -142,7 +160,7 @@ class App {
                 charId.remove();
             }
 
-            app.inputCharacterId(document.querySelector('form'), data.data.id);
+            app.inputCharacterId(document.querySelector('form'), data.data.id, data.data.datetime);
 
             app.initSheet();
             app.closePopup();
@@ -159,7 +177,7 @@ class App {
         }
     }
 
-    inputCharacterId(body, id) {
+    inputCharacterId(body, id, lastSavedDate) {
         let elem = body.querySelector('input[name="characterId"]');
         if (elem) {
             elem.value = id;
@@ -169,6 +187,17 @@ class App {
             charId.type = 'hidden';
             charId.value = id;
             body.appendChild(charId);
+        }
+
+        elem = body.querySelector('input[name="lastSavedDate"]');
+        if (elem) {
+            elem.value = lastSavedDate;
+        } else {
+            let lastSavedDateElem = document.createElement('input');
+            lastSavedDateElem.name = 'lastSavedDate';
+            lastSavedDateElem.type = 'hidden';
+            lastSavedDateElem.value = lastSavedDate;
+            body.appendChild(lastSavedDateElem);
         }
     }
 
@@ -230,15 +259,44 @@ class App {
         document.querySelector("[name='Strengthscore']").addEventListener('input', this.strengthskills);
         document.querySelector("[name='Wisdomscore']").addEventListener('input', this.wisdomskills);
         document.querySelector("[name='Intelligencescore']").addEventListener('input', this.intelligenceskills);
-        document.querySelectorAll('.class-resources .edit').forEach(elem => {
+        document.querySelectorAll('.edit').forEach(elem => {
             elem.addEventListener('click', app.showDetail);
         });
+
+        let expertises = document.getElementsByClassName('expertise');
+
+        for (let index = 0; index < expertises.length; index++) {
+            const elem = expertises[index];
+            elem.addEventListener('click', (e) => {
+                if (!e.target.checked && e.target.value != 2) {
+                    e.preventDefault();
+                    e.target.value = 2;
+                } else if (e.target.checked && e.target.value == 2) {
+                    e.target.value = undefined;
+                }
+            });
+        }
         
         document.querySelector('form.charsheet').addEventListener('click', () => {
             if (!document.querySelector('#menu-content').classList.contains('hide')) {
                 app.closeMenu();
             }
         });
+
+        window.addEventListener('online',  this.goOnline);
+        window.addEventListener('offline', this.goOffline);
+        window.addEventListener('beforeunload', (e) => {
+            let actualData = app.getCharData();
+            if (JSON.stringify(actualData) != JSON.stringify(app.prevData)) {
+                let msg = 'You have unsaved data. Leaving the page will restore the data to the previous changes. Are you sure to leave?';
+                (e || window.event).returnValue = msg;
+                return msg;
+            }
+        });
+
+        app.prevData = app.getCharData();
+        app.preventSaving = false;
+        app.isSaving = false;
 
         setInterval(app.save, 5000);
     }
@@ -265,7 +323,11 @@ class App {
         let data = {};
         document.querySelectorAll('input, textarea').forEach(element => {
             if (element.type == 'checkbox') {
-                data[element.name] = element.checked;
+                if (element.classList.contains('expertise')) {
+                    data[element.name] = element.value == 2 ? element.value : element.checked;
+                } else {
+                    data[element.name] = element.checked;
+                }
             } else {
                 data[element.name] = element.value;
             }
@@ -311,24 +373,60 @@ class App {
         this.closePopup();
     }
 
-    save() {
-        document.querySelector('#statusMessage').textContent = 'Saving...';
-        app.callApi('POST', 'saveCharacter', '', app.getCharData(), {}, true)
-        .then(data => {
-            if (data.status == 'OK') {
-                document.querySelector('#statusMessage').textContent = 'Saved';
-                app.inputCharacterId(document.querySelector('form'), data.data.id)
+    save(force = false, preventSaving = false) {
+        if (!app.isSaving) {
+            app.isSaving = true;
+            if (navigator.onLine) {
+                if (!app.preventSaving || preventSaving) {
+                    document.querySelector('#statusMessage').textContent = 'Saving...';
+                    let data = app.getCharData();
+                    if (force) {
+                        data.force = true;
+                    }
+                    app.callApi('POST', 'saveCharacter', '', data, {}, true)
+                    .then(data => {
+                        if (data.status == 'OK') {
+                            document.querySelector('#statusMessage').textContent = 'Saved';
+                            app.inputCharacterId(document.querySelector('form'), data.data.id, data.data.datetime);
+                            app.prevData = app.getCharData();
+                        } else {
+                            document.querySelector('#statusMessage').textContent = 'Error saving';
+                            if (data.message == 'Character already saved with a future date, must overwrite.') {
+                                if (confirm("There's new data saved in the database, different from here. Would you like to overwrite it?")) {
+                                    app.isSaving = false;
+                                    app.save(true, true);
+                                    app.preventSaving = false;
+                                } else {
+                                    app.preventSaving = true;
+                                    document.querySelector('#statusMessage').textContent = 'Not saving automatically';
+                                }
+                            }
+                            console.error(data.message);
+                        }
+
+                        app.isSaving = false;
+                    });
+                } else {
+                    document.querySelector('#statusMessage').textContent = 'Not saving automatically';
+                }
             } else {
-                document.querySelector('#statusMessage').textContent = 'Error saving';
-                console.error(data.message);
+                document.querySelector('#statusMessage').textContent = 'Offline, not saving';
             }
-        });
+        }
     }
 
     loadData(data) {
         document.querySelectorAll('input, textarea').forEach(element => {
             if (element.type == 'checkbox') {
-                element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+                if (element.classList.contains('expertise')) {
+                    if (data.hasOwnProperty(element.name) && data[element.name] == 2) {
+                        element.value = data[element.name];
+                    }
+
+                    element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+                } else {
+                    element.checked = data.hasOwnProperty(element.name) ? data[element.name] : false;
+                }
             } else {
                 element.value = data.hasOwnProperty(element.name) ? data[element.name] : '';
             }
@@ -346,7 +444,7 @@ class App {
     }
 
     goTo(selector) {
-        document.querySelector(selector).scrollIntoView({behavior: "smooth", block: "start"});
+        document.querySelector(selector).scrollIntoView({behavior: "auto", block: "start"});
         app.closeMenu();
     }
 

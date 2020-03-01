@@ -1,4 +1,4 @@
-$sheet-width: 800px;
+$sheet-width: 1000px;
 $bg: white;
 $faded: #dddddd;
 $faded-light: #eeeeee;
@@ -109,6 +109,10 @@ input[type="checkbox"] {
   order: 1;
   &:checked {
     background-color: black;
+
+    &[value="2"] {
+      background-color: green;
+    }
 
     &.green {
       background-color: green;
@@ -230,19 +234,26 @@ form.charsheet {
     }
     section.options {
       display: flex;
-      flex-direction: row;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       width: 20%;
 
       > div {
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
         justify-content: center;
 
         > div {
-          margin: 3px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+
+          > div {
+            margin: 3px;
+          }
         }
       }
     }
@@ -717,7 +728,7 @@ form.charsheet {
               }
               
               div, input {
-                width: 33%;
+                width: 33.3333%;
               }
               
               input {
@@ -781,6 +792,12 @@ form.charsheet {
                 }
               }
             }
+
+            @media #{$phone} {
+              > div {
+                flex-direction: column;
+              }
+            }
           }
 
           &.competencies {
@@ -819,6 +836,12 @@ form.charsheet {
               > div {
                 &:first-child:not(.title) {
                   border-right: 1px solid black;
+                }
+
+                @media #{$phone} {
+                  &:first-child:not(.title) {
+                    border-right: none;
+                  }
                 }
 
                 .row {
@@ -919,6 +942,225 @@ form.charsheet {
               input {
                 border: 1px solid black;
                 width: 100%;
+              }
+            }
+          }
+
+        }
+
+        &.spells {
+          > section {
+            width: 100%;
+          }
+
+          .spells-info {
+            flex-direction: row;
+            flex-wrap: wrap;
+
+            .title {
+              font-weight: bold;
+              width: 100%;
+              text-align: center;
+            }
+
+            > section {
+              width: 100%;
+              flex-direction: row;
+
+              > section {
+                flex-basis: 100%;
+                flex-direction: column;
+                margin: 0 10px;
+                justify-content: space-between;
+
+                &:first-of-type {
+                  margin-left: 0;
+                }
+
+                &:last-of-type {
+                  margin-right: 0;
+                }
+
+                > div {
+                  margin: 3px 0;
+                }
+
+                input {
+                  border: none;
+                  width: 100%;
+                }
+
+                .border {
+                  border: 1px solid black;
+                }
+
+                .spell-slots {
+                  flex-direction: row;
+                  justify-content: space-between;
+
+                  > section {
+                    flex-direction: column;
+                    text-align: center;
+
+                    input {
+                      width: 25px;
+                      height: 25px;
+                      padding: 2px;
+                    }
+                  }
+                }
+
+                &.spell-diff-atk {
+                  flex-direction: row;
+                  justify-content: center;
+                  align-items: center;
+                }
+
+                .spell-difficulty, .spell-attack-bonus {
+                  text-align: center;
+                  margin: 0 10px;
+
+                  input {
+                    margin-top: 5px;
+                    width: 60px;
+                    height: 60px;
+                    font-size: 26px;
+                    border: 4px solid red;
+                    border-radius: 32px;
+                  }
+
+                  &.spell-attack-bonus input {
+                    border-color: black;
+                  }
+                }
+              }
+            }
+
+            @media #{$phone} {
+              > section {
+                flex-wrap: wrap;
+                
+                > section {
+                  width: 100%;
+                  flex-basis: none;
+                  margin: 5px 0;
+                }
+              }
+            }
+          }
+
+          .spell-list {
+            margin-top: 30px;
+
+            > section {
+              width: 100%;
+              flex-direction: column;
+
+              > section > div {
+                border: 1px solid black;
+
+                input:not([type="checkbox"]) {
+                  border: none;
+                  width: 100%;
+                }
+
+                input[type="checkbox"] {
+                  width: 17px;
+                  height: 15px;
+                  order: unset;
+                }
+
+                &.spell-name:not(.cantrip) > label {
+                  width: calc(44% - 31px);
+                }
+
+                &.spell-details > label {
+                  width: calc(44% + 18px);
+                }
+
+                > label {
+                  display: none;
+                  width: 44%;
+                  border-right: 1px solid black;
+                  text-align: center;
+                  height: 100%;
+                  align-items: center;
+                  justify-content: center;
+                }
+              }
+            
+              .edit {
+                cursor: pointer;
+                font-size: 17px;
+                margin-right: 3px;
+              }
+
+              .header {
+                text-align: center;
+
+                > div {
+                  border-top: none;
+                }
+              }
+
+              .spell-name {
+                width: 15%;
+              }
+
+              .spell-cast {
+                width: 10%;
+              }
+
+              .spell-reach {
+                width: 10%;
+              }
+
+              .spell-duration {
+                width: 10%;
+              }
+
+              .spell-component {
+                width: 12%;
+              }
+
+              .spell-type {
+                width: 8%;
+              }
+
+              .spell-details {
+                width: 35%;
+              }
+
+              .row > div {
+                display: flex;
+                align-items: center;
+              }
+
+              @media #{$phone} {
+                > section {
+                  flex-wrap: wrap;
+                  justify-content: space-between;
+
+                  > div {
+                    width: 100% !important;
+                    
+                    input[type="checkbox"] {
+                      width: 20px;
+                    }
+
+                    > label {
+                      display: flex;
+                    }
+                  }
+                }
+
+                .header > div:not(.spell-name) {
+                  display: none;
+                }
+
+                .row {
+                  margin: 2px 0;
+                }
               }
             }
           }
@@ -1023,13 +1265,6 @@ form.charsheet {
       border: 1px solid black;
     }
 
-    #popup-close {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      cursor: pointer;
-    }
-
     .title {
       text-align: center;
     }
@@ -1037,6 +1272,16 @@ form.charsheet {
     .center {
       display: flex;
       justify-content: center;
+    }
+
+    .button {
+      margin: 0 3px;
+
+      &.close {
+        border-color: red;
+        color: red;
+        font-weight: bold;
+      }
     }
 
     .login, .register {

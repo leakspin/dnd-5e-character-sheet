@@ -3,6 +3,7 @@ const path = require('path');
 
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const WorkboxPlugin = require('workbox-webpack-plugin');
 
 const generateHTMLPlugins = () => glob.sync('./src/**/*.html').map(
   dir => new HTMLWebpackPlugin({
@@ -38,7 +39,17 @@ module.exports = {
         from: './src/static/',
         to: './static/',
       },
+      {
+        from: './src/manifest.json',
+        to: './',
+      },
     ]),
+    new WorkboxPlugin.GenerateSW({
+      // these options encourage the ServiceWorkers to get in there fast
+      // and not allow any straggling "old" SWs to hang around
+      clientsClaim: true,
+      skipWaiting: true,
+    }),
     ...generateHTMLPlugins(),
   ],
   stats: {
