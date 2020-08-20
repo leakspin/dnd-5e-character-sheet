@@ -18,6 +18,8 @@ $int-color: #4D99b7;
 $wis-color: #c6be62;
 $cha-color: #d77097;
 
+@import 'icomoon.css';
+
 * {
   box-sizing: border-box;
   font-family: 'Open Sans', serif;
@@ -49,6 +51,32 @@ $cha-color: #d77097;
 
 .bold {
   font-weight: bold;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  
+  &:hover .tooltiptext {
+    visibility: visible;
+  }
+
+  .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px 3px;
+    
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    width: 150px;
+    top: 150%;
+    margin-left: -75px;
+  }
 }
 
 .strength {
@@ -356,6 +384,23 @@ form.charsheet {
               > div {
                 display: flex;
                 flex-direction: column;
+
+                > div {
+                  width: 10px;
+                  height: 10px;
+                  border: 1px solid black;
+                  border-radius: 10px;
+                  margin: 4px;
+                  opacity: 0.5;
+
+                  &.green {
+                    background-color: green;
+                  }
+
+                  &.red {
+                    background-color: red;
+                  }
+                }
               }
             }
           }
@@ -462,6 +507,10 @@ form.charsheet {
           flex-direction: column;
           text-align: center;
           justify-content: center;
+
+          label.totalhd {
+            cursor: pointer;
+          }
 
           input {
             border: 0;
